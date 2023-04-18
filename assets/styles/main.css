@@ -2,5 +2,7 @@
 .stocker-main-body {
   --primary: #192F82;
   --secondary: #61A083;
+  --dark-gray: rgba(0, 0, 0, .87);
+
   --headerHeight: 75px;
 }

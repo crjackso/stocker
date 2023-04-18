@@ -103,7 +103,7 @@ export default {
   }
 
   :deep(.inactive-parent-nav .v-list-item--active) {
-    color: #eeeeee; // TODO (was bp-dark-gray)
+    color: var(--dark-gray);
 
     &:hover:before {
       opacity: 0;
