@@ -1,4 +1,4 @@
-import PolygonApi from "~/lib/PolygonApi"
+import PolygonApi from "~/lib/polygon/PolygonApi"
 import StockApi from "~/lib/StockApi"
 
 const stockApi: StockApi = new PolygonApi()

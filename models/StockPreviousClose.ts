@@ -1,7 +1,7 @@
 import dayjs from "dayjs"
 
 class StockPreviousClose {
-  constructor(price: number, asOfDateUnix: number) {
+  constructor({ price, asOfDateUnix }: { price: number, asOfDateUnix: number }) {
     this.price = price
     this.asOfDateUnix = asOfDateUnix
   }

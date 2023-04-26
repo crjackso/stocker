@@ -4,7 +4,10 @@ class PolygonTranslator {
   public previousClose(data: IAggsPreviousClose) {
     const mostRecentClose = data.results?.find(Boolean)
 
-    return new StockPreviousClose(<number>mostRecentClose?.c, <number>mostRecentClose?.t)
+    return new StockPreviousClose({
+      price: <number>mostRecentClose?.c,
+      asOfDateUnix: <number>mostRecentClose?.t
+    })
   }
 
   public dividends(data: IDividendsResults) {
