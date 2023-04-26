@@ -1,5 +1,5 @@
 <template>
-  <header class="d-flex justify-space-between flex-column flex-sm-row mb-4" :class="{'mt-4': $device.isMobile}">
+  <header class="d-flex justify-space-between flex-column flex-sm-row mb-4" :class="{'mt-4': onMobileDevice}">
     <h1 :data-test-page-header="text" :class="{'pl-4': onMobileDevice}" class="page-header">
       <slot />
     </h1>
@@ -7,21 +7,21 @@
   </header>
 </template>
 
-<script>
-export default {
-  name: 'PageHeader',
-  props: {
+<script setup>
+  // import useDevice from '@nuxtjs/device'
+
+  const { isMobile } = useDevice()
+
+  const props = defineProps({
     text: {
       type: String,
       default: ''
     }
-  },
-  computed: {
-    onMobileDevice () {
-      return this.$device.isMobile
-    }
-  }
-}
+  })
+
+  const onMobileDevice = computed(()=> {
+    return isMobile
+  })
 </script>
 
 <style lang="scss" scoped>
