@@ -10,13 +10,20 @@ class PolygonTranslator {
     })
   }
 
-  public dividends(data: IDividendsResults) {
+  public dividends(tickerSymbol: string, data: IDividendsResults) {
     const mostRecentDividendLog = data.results?.find(Boolean)
 
-    return new StockDividendLog({
-      exDividendDate: mostRecentDividendLog?.ex_dividend_date,
-      payDate: mostRecentDividendLog?.pay_date
-    })
+    if (!mostRecentDividendLog?.ex_dividend_date) {
+      return new StockDividendLog({
+        tickerSymbol: tickerSymbol
+      })
+    } else {
+      return new StockDividendLog({
+        tickerSymbol: <string>mostRecentDividendLog.ticker,
+        exDividendDate: mostRecentDividendLog.ex_dividend_date,
+        payDate: mostRecentDividendLog.pay_date
+      })
+    }
   }
 }
 
