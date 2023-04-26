@@ -12,9 +12,11 @@ class PolygonTranslator {
 
   public dividends(data: IDividendsResults) {
     const mostRecentDividendLog = data.results?.find(Boolean)
-    const exDate = mostRecentDividendLog?.ex_dividend_date
 
-    return new StockDividendLog(new Date(exDate as string))
+    return new StockDividendLog({
+      exDividendDate: mostRecentDividendLog?.ex_dividend_date,
+      payDate: mostRecentDividendLog?.pay_date
+    })
   }
 }
 

@@ -1,0 +1,7 @@
+{
+  "volar.inlayHints.eventArgumentInInlineHandlers": false,
+  "[vue]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "Vue.volar"
+  }
+}

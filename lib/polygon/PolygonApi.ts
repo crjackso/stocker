@@ -1,6 +1,6 @@
 import { IRestClient, restClient } from '@polygon.io/client-js'
 import PolygonTranslator from './PolygonTranslator'
-import StockApi from './StockApi'
+import StockApi from '~/lib/StockApi'
 import * as secrets from '~/secrets.json'
 
 // Polygon Stock Api
