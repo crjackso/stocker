@@ -11,9 +11,6 @@
     <v-btn @click="onDividendFetch" :disabled="!stockDividendLog">
       Dividend
     </v-btn>
-    <v-btn @click="onPortfolioDividendsFetch">
-      Portfolio Dividends
-    </v-btn>
     <stocks-previous-close-card
       v-if="stockPreviousClose"
       :previous-close="stockPreviousClose"
@@ -22,7 +19,6 @@
       v-if="stockDividendLog"
       :dividend-log="stockDividendLog"
     />
-    {{ stockDividendLogs }}
   </section>
 </template>
 
@@ -32,7 +28,6 @@ const { $stockApi } = useNuxtApp()
 const stockPreviousClose = ref(undefined)
 const stockDividendLog = ref(undefined)
 const tickerEntry = ref(undefined)
-const stockDividendLogs = ref(undefined)
 
 const tickerSymbol = computed(() => {
   return tickerEntry.value?.toUpperCase()?.trim()
@@ -49,13 +44,7 @@ const onSave = async () => {
 
 const onDividendFetch = async () => {
   stockPreviousClose.value = null
-  debugger
   stockDividendLog.value = await $stockApi.dividends(tickerSymbol.value)
-  debugger
 }
 
-const onPortfolioDividendsFetch = async () => {
-  stockPreviousClose.value = null
-  stockDividendLogs.value = await $stockApi.portfolioDividends()
-}
 </script>

@@ -1,3 +1,5 @@
+import { toDate } from "~/lib/utils/date"
+
 class StockDividendLog {
   constructor(
     { exDividendDate,
@@ -10,13 +12,13 @@ class StockDividendLog {
         tickerSymbol: string
       }
   ) {
-    this.exDividendDate = exDividendDate
-    this.payDate = payDate
+    this.exDividendDate = toDate(exDividendDate)
+    this.payDate = toDate(payDate)
     this.tickerSymbol = tickerSymbol
   }
 
-  exDividendDate: string | undefined
-  payDate: string | undefined
+  exDividendDate: Date | undefined
+  payDate: Date | undefined
   tickerSymbol: string | undefined
 }
 
