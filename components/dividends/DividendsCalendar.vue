@@ -12,7 +12,7 @@
         />
       </v-col>
       <v-col>
-        <dividends-month-log
+        <dividends-log
           :mode="logDetailMode"
           :stock-dividend-logs="activeDividendLogs"
           :pay-date="activeModeDate"
@@ -42,7 +42,7 @@ const props = defineProps({
 // Data
 const visibleCalendarDate = ref(currentDate().toDate())
 const activeCalendarDate = ref(undefined)
-const activeMonth = ref(currentDate().month())
+// const activeMonth = ref(currentDate().month())
 const LogDetailModes = {
   month: 'month',
   day: 'day'
@@ -103,6 +103,10 @@ const activeMonthPayDates = computed(() => {
   return activeMonthDividendLogs.value?.map((log) => log.payDate) || []
 })
 
+const activeMonth = computed(() => {
+  return visibleCalendarDate.value.getMonth()
+})
+
 // Methods
 const onDayClick = (calendarDay) => {
   logDetailMode.value = LogDetailModes.day
@@ -113,7 +117,9 @@ const onMonthChange = (page) => {
   const selectedPage = page[0]
   const selectedMonth = selectedPage.month - 1
   visibleCalendarDate.value = new Date(selectedPage.year, selectedMonth, 1)
-  activeMonth.value = selectedMonth
+  logDetailMode.value = LogDetailModes.month
+  activeCalendarDate.value = undefined
+  // activeMonth.value = selectedMonth
 }
 
 const onDividendDayLogClose = () => {

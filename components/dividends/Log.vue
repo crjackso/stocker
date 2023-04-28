@@ -1,17 +1,19 @@
 <template>
   <div>
-    <h2>{{ title }}</h2>
-    <v-btn
-      class="d-block"
-      @click="$emit('close')"
+    <v-icon
       v-if="inDayMode"
-    >
-      Close
-    </v-btn>
+      icon="circle-xmark"
+      role="button"
+      color="primary"
+      class="close-icon"
+      @click="$emit('close')"
+    />
 
-    <span v-if="noDividends">
+    <h2>{{ title }}</h2>
+
+    <div v-if="noDividends">
       No dividends exist for this date.
-    </span>
+    </div>
     <ul>
       <li v-for="log in stockDividendLogs" :key="log.tickerSymbol">
         <div>
@@ -58,13 +60,27 @@ const inDayMode = computed(() => {
   return props.mode === 'day'
 })
 const title = computed(() => {
+  let date = ''
   if (inDayMode.value) {
-    return formattedPayDate.value
+    date = `${formattedPayDate.value}`
   } else {
-    return `${month.value} ${year.value} Payments`
+    date = `${month.value} ${year.value}`
   }
+  return `Payments for ${date}`
 })
 const formattedPayDate = computed(() => {
   return formatDate(props.payDate)
 })
 </script>
+
+<style scoped>
+h2 {
+  display: inline;
+}
+
+.close-icon {
+  display: inline;
+  margin-left: -31px;
+  margin-right: 7px;
+}
+</style>
