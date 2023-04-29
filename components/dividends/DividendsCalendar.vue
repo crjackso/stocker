@@ -1,48 +1,44 @@
 <template>
   <client-only>
-  <v-container>
-    <v-row>
-      <v-col>
-        <v-calendar
-          class="dividend-calendar"
-          title-position="left"
-          :attributes="calendarAttributes"
-          @dayclick="onDayClick"
-          @did-move="onMonthChange"
-        />
-      </v-col>
-      <v-col>
-        <dividends-log
-          :mode="logDetailMode"
-          :stock-dividend-logs="activeDividendLogs"
-          :pay-date="activeModeDate"
-          @close="onDividendDayLogClose"
-        />
-      </v-col>
-    </v-row>
-  </v-container>
-</client-only>
+    <v-container>
+      <v-row>
+        <v-col>
+          <v-calendar
+            class="dividend-calendar"
+            title-position="left"
+            :attributes="calendarAttributes"
+            @dayclick="onDayClick"
+            @did-move="onMonthChange"
+          />
+        </v-col>
+        <v-col>
+          <dividends-log
+            :mode="logDetailMode"
+            :stock-dividend-logs="activeDividendLogs"
+            :pay-date="activeModeDate"
+            @close="onDividendDayLogClose"
+          />
+        </v-col>
+      </v-row>
+    </v-container>
+  </client-only>
 </template>
 
-<script setup>
-import { parseDate, datesAreEqual, currentDate } from '~/lib/utils/date'
-import { groupBy } from '~/lib/utils/general'
+<script setup lang="ts">
+import { currentDate } from '~/lib/utils/date'
+import StockDividendLogs from '~/models/StockDividendLogs'
 
 // Props
 const props = defineProps({
   stockDividendLogs: {
-    type: Array,
-    required: true,
-    default () {
-      return []
-    }
+    type: StockDividendLogs,
+    required: true
   }
 })
 
 // Data
 const visibleCalendarDate = ref(currentDate().toDate())
 const activeCalendarDate = ref(undefined)
-// const activeMonth = ref(currentDate().month())
 const LogDetailModes = {
   month: 'month',
   day: 'day'
@@ -68,31 +64,20 @@ const calendarAttributes = computed(() => {
   return attributes
 })
 
-const dividendLogsByMonth = computed(() => {
-  if (!props.stockDividendLogs) return []
-
-  return groupBy(
-    props.stockDividendLogs,
-    (log) => {
-      return log.payDate ? parseDate(log.payDate).month() : -1
-    }
-  )
-})
-
 const activeDayDividendLogs = computed(() => {
-  if (!activeCalendarDate.value) return []
-
-  return activeMonthDividendLogs.value.filter((stockDividendLog) => {
-    return datesAreEqual(stockDividendLog.payDate, activeCalendarDate.value)
-  })
+  return props.stockDividendLogs.forDate(
+    activeCalendarDate.value
+  ) as StockDividendLogs
 })
 
 const activeMonthDividendLogs = computed(() => {
-  return dividendLogsByMonth.value[activeMonth.value] || []
+  return props.stockDividendLogs.forMonth(activeMonth.value, activeYear.value)
 })
 
 const activeDividendLogs = computed(() => {
-  return logDetailMode.value === LogDetailModes.day ? activeDayDividendLogs.value : activeMonthDividendLogs.value
+  return logDetailMode.value === LogDetailModes.day
+    ? activeDayDividendLogs.value
+    : activeMonthDividendLogs.value
 })
 
 const activeModeDate = computed(() => {
@@ -100,20 +85,25 @@ const activeModeDate = computed(() => {
 })
 
 const activeMonthPayDates = computed(() => {
-  return activeMonthDividendLogs.value?.map((log) => log.payDate) || []
+  return activeMonthDividendLogs.value.payDates()
 })
 
 const activeMonth = computed(() => {
   return visibleCalendarDate.value.getMonth()
 })
 
+const activeYear = computed(() => {
+  return visibleCalendarDate.value.getFullYear()
+})
+
 // Methods
-const onDayClick = (calendarDay) => {
+const onDayClick = (calendarDay: any) => {
+  debugger
   logDetailMode.value = LogDetailModes.day
   activeCalendarDate.value = calendarDay.date
 }
 
-const onMonthChange = (page) => {
+const onMonthChange = (page: any) => {
   const selectedPage = page[0]
   const selectedMonth = selectedPage.month - 1
   visibleCalendarDate.value = new Date(selectedPage.year, selectedMonth, 1)

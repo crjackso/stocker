@@ -1,4 +1,4 @@
-import { IAggsPreviousClose, IDividendsResults, ITickerDetails } from "@polygon.io/client-js"
+import { IAggsPreviousClose, IDividendsResults } from "@polygon.io/client-js"
 import * as secrets from '~/secrets.json' // TODO
 
 class PolygonTranslator {
@@ -25,7 +25,8 @@ class PolygonTranslator {
         tickerSymbol,
         stockDetails,
         exDividendDate: mostRecentDividendLog.ex_dividend_date,
-        payDate: mostRecentDividendLog.pay_date
+        payDate: mostRecentDividendLog.pay_date,
+        cashAmount: mostRecentDividendLog.cash_amount
       })
     }
   }

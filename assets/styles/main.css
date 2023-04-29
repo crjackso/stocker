@@ -5,8 +5,11 @@
   --dark-gray: rgba(0, 0, 0, .87);
 
   --headerHeight: 75px;
+
+  --border: #eeeeee;
 }
 
 h1, h2, h3, h4 {
   color: var(--primary);
 }
+

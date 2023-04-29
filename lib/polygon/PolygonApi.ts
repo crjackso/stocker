@@ -3,6 +3,7 @@ import PolygonTranslator from './PolygonTranslator'
 import StockApi from '~/lib/StockApi'
 import * as secrets from '~/secrets.json'
 import StockDividendLog from '~/models/StockDividendLog'
+import StockDividendLogs from '~/models/StockDividendLogs'
 
 // Polygon Stock Api
 // https://github.com/polygon-io/client-js
@@ -31,12 +32,12 @@ class PolygonApi implements StockApi {
     }
   }
 
-  public async portfolioDividends() {
+  public async portfolioDividends(): Promise<StockDividendLogs> {
     const fns = this.portfolio.map(async (ticker) => {
       return await this.dividends(ticker)
     })
 
-    return await Promise.all(fns)
+    return new StockDividendLogs(await Promise.all(fns))
   }
 
   private async dividends(ticker: string): Promise<StockDividendLog> {

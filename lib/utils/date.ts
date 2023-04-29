@@ -14,16 +14,18 @@ export const toDate = (timestamp: string | dayjs.Dayjs | Date | undefined) => {
 }
 
 export const formatDate = (date: string | dayjs.Dayjs | Date | undefined, format = 'M/DD/YYYY') => {
-  if (date) {
-    return parseDate(date)?.format(format)
-  }
+  return parseDate(date)?.format(format)
 }
 
 export const currentDate = () => {
   return dayjs().utc()
 }
 
-export const datesAreEqual = (date1: string | dayjs.Dayjs | Date, date2: string | dayjs.Dayjs | Date) => {
+export const datesAreEqual = (
+  date1: string | dayjs.Dayjs | Date | undefined,
+  date2: string | dayjs.Dayjs | Date | undefined
+) => {
+  if(!date1 || !date2) return false
   return parseDate(date1)?.unix() === parseDate(date2)?.unix()
 }
 

@@ -1,6 +1,6 @@
 interface StockApi {
   previousClose: (ticker: string) => Promise<StockPreviousClose>
-  portfolioDividends: () => Promise<StockDividendLog[]>
+  portfolioDividends: () => Promise<StockDividendLogs>
 }
 
 export default StockApi

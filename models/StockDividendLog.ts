@@ -7,13 +7,15 @@ class StockDividendLog {
       tickerSymbol,
       exDividendDate,
       payDate,
-      stockDetails
+      stockDetails,
+      cashAmount
     }:
       {
         tickerSymbol: string,
+        stockDetails: StockDetails,
         exDividendDate?: string,
         payDate?: string,
-        stockDetails: StockDetails
+        cashAmount?: number
       }
   ) {
     this.tickerSymbol = tickerSymbol
@@ -21,8 +23,10 @@ class StockDividendLog {
     this.payDate = toDate(payDate)
     this.payDateFormatted = formatDate(payDate)
     this.stockDetails = stockDetails
+    this.cashAmount = cashAmount
   }
 
+  cashAmount: number | undefined
   exDividendDate: Date | undefined
   payDate: Date | undefined
   stockDetails: StockDetails

@@ -1,9 +1,7 @@
 <template>
   <div>
-    <h1>
-      Dividends Calendar
-    </h1>
-    <dividends-calendar :stock-dividend-logs="stockDividendLogs"/>
+    <h1>Dividends Calendar</h1>
+    <dividends-calendar :stock-dividend-logs="stockDividendLogs" />
   </div>
 </template>
 
@@ -15,7 +13,7 @@ useHead({
 })
 
 // Data
-const stockDividendLogs = ref([])
+const stockDividendLogs = ref(new StockDividendLogs())
 
 // Methods
 const fetchPortfolioDividends = async () => {
@@ -26,5 +24,4 @@ const fetchPortfolioDividends = async () => {
 onMounted(async () => {
   await fetchPortfolioDividends()
 })
-
 </script>
