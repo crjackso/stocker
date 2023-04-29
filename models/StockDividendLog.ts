@@ -1,24 +1,32 @@
-import { toDate } from "~/lib/utils/date"
+import { toDate, formatDate } from "~/lib/utils/date"
+import StockDetails from "./StockDetails"
 
 class StockDividendLog {
   constructor(
-    { exDividendDate,
+    {
+      tickerSymbol,
+      exDividendDate,
       payDate,
-      tickerSymbol
+      stockDetails
     }:
       {
+        tickerSymbol: string,
         exDividendDate?: string,
         payDate?: string,
-        tickerSymbol: string
+        stockDetails: StockDetails
       }
   ) {
+    this.tickerSymbol = tickerSymbol
     this.exDividendDate = toDate(exDividendDate)
     this.payDate = toDate(payDate)
-    this.tickerSymbol = tickerSymbol
+    this.payDateFormatted = formatDate(payDate)
+    this.stockDetails = stockDetails
   }
 
   exDividendDate: Date | undefined
   payDate: Date | undefined
+  stockDetails: StockDetails
+  payDateFormatted: string | undefined
   tickerSymbol: string | undefined
 }
 

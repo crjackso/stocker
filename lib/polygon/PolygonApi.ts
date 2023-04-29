@@ -31,26 +31,28 @@ class PolygonApi implements StockApi {
     }
   }
 
-  public async dividends(ticker: string): Promise<StockDividendLog> {
-    if (!ticker) throw new Error('Please specify a ticker')
-
-    console.log(`Fetching dividends for ticker ${ticker}`)
-    try {
-      const query = { ticker }
-      const dividendData = await this.rest.reference.dividends(query)
-      return this.translator.dividends(ticker, dividendData)
-    } catch (error) {
-      console.error('An error happened:', error)
-      throw error
-    }
-  }
-
   public async portfolioDividends() {
     const fns = this.portfolio.map(async (ticker) => {
       return await this.dividends(ticker)
     })
 
     return await Promise.all(fns)
+  }
+
+  private async dividends(ticker: string): Promise<StockDividendLog> {
+    if (!ticker) throw new Error('Please specify a ticker')
+
+    console.log(`Fetching dividends for ticker ${ticker}`)
+    try {
+      const query = { ticker }
+      const { results: tickerDetails } = await this.rest.reference.tickerDetails(ticker)
+      const dividendData = await this.rest.reference.dividends(query)
+
+      return this.translator.dividends(ticker, tickerDetails, dividendData)
+    } catch (error) {
+      console.error('An error happened:', error)
+      throw error
+    }
   }
 }
 

@@ -14,7 +14,9 @@ export const toDate = (timestamp: string | dayjs.Dayjs | Date | undefined) => {
 }
 
 export const formatDate = (date: string | dayjs.Dayjs | Date | undefined, format = 'M/DD/YYYY') => {
-  return parseDate(date)?.format(format)
+  if (date) {
+    return parseDate(date)?.format(format)
+  }
 }
 
 export const currentDate = () => {

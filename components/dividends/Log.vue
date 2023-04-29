@@ -14,14 +14,29 @@
     <div v-if="noDividends">
       No dividends exist for this date.
     </div>
-    <ul>
-      <li v-for="log in stockDividendLogs" :key="log.tickerSymbol">
-        <div>
-          {{ log.tickerSymbol }}: {{ log.payDate }}
-        </div>
-      </li>
-    </ul>
 
+    <v-list lines="one">
+      <v-list-item
+        v-for="log in stockDividendLogs"
+        :key="log.tickerSymbol"
+        :title="log.stockDetails.fullName()"
+        :subtitle="logCardSubtitle(log)"
+        elevation="2"
+      >
+      <template v-slot:prepend>
+        <v-img
+          v-if="log.stockDetails?.logoUrl"
+          :src="log.stockDetails?.logoUrl"
+          href="Company Logo"
+          width="50"
+          height="50"
+        />
+        <span v-else class="etf-label">
+          ETF
+        </span>
+      </template>
+    </v-list-item>
+    </v-list>
   </div>
 </template>
 
@@ -50,15 +65,19 @@ const props = defineProps({
 const noDividends = computed(() => {
   return !props.stockDividendLogs?.length
 })
+
 const month = computed(() => {
   return monthName(props.payDate)
 })
+
 const year = computed(() => {
   return props.payDate?.getFullYear()
 })
+
 const inDayMode = computed(() => {
   return props.mode === 'day'
 })
+
 const title = computed(() => {
   let date = ''
   if (inDayMode.value) {
@@ -68,12 +87,18 @@ const title = computed(() => {
   }
   return `Payments for ${date}`
 })
+
 const formattedPayDate = computed(() => {
   return formatDate(props.payDate)
 })
+
+// Methods
+const logCardSubtitle = (stockDividendLog: StockDividendLog) => {
+  return `Pay Date: ${stockDividendLog.payDateFormatted}`
+}
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 h2 {
   display: inline;
 }
@@ -82,5 +107,13 @@ h2 {
   display: inline;
   margin-left: -31px;
   margin-right: 7px;
+}
+
+.etf-label {
+  width: 50px;
+}
+
+:deep(.v-list-item__prepend) {
+  padding-right: 10px;
 }
 </style>
