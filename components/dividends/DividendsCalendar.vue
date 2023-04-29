@@ -2,7 +2,7 @@
   <client-only>
     <v-container>
       <v-row>
-        <v-col>
+        <v-col cols="12" md="4" class="calendar-container">
           <v-calendar
             class="dividend-calendar"
             title-position="left"
@@ -11,7 +11,7 @@
             @did-move="onMonthChange"
           />
         </v-col>
-        <v-col>
+        <v-col cols="12" md="8">
           <dividends-log
             :mode="logDetailMode"
             :stock-dividend-logs="activeDividendLogs"
@@ -98,7 +98,6 @@ const activeYear = computed(() => {
 
 // Methods
 const onDayClick = (calendarDay: any) => {
-  debugger
   logDetailMode.value = LogDetailModes.day
   activeCalendarDate.value = calendarDay.date
 }
@@ -109,7 +108,6 @@ const onMonthChange = (page: any) => {
   visibleCalendarDate.value = new Date(selectedPage.year, selectedMonth, 1)
   logDetailMode.value = LogDetailModes.month
   activeCalendarDate.value = undefined
-  // activeMonth.value = selectedMonth
 }
 
 const onDividendDayLogClose = () => {
@@ -119,6 +117,14 @@ const onDividendDayLogClose = () => {
 </script>
 
 <style scoped lang="scss">
+.calendar-container {
+  display: inline-table;
+}
+:deep(.dividend-calendar) {
+  @media only screen and (max-width: 960px) {
+    width: 100%;
+  }
+}
 :deep(.dividend-calendar .vc-weekday) {
   color: var(--primary);
 
