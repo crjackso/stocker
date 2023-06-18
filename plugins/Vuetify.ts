@@ -13,10 +13,9 @@ const myCustomLightTheme: ThemeDefinition = {
     error: '#B00020',
     info: '#2196F3',
     success: '#4CAF50',
-    warning: '#FB8C00',
+    warning: '#FB8C00'
   }
 }
-
 
 export default defineNuxtPlugin((nuxtApp) => {
   const vuetify = createVuetify({
@@ -34,10 +33,9 @@ export default defineNuxtPlugin((nuxtApp) => {
       aliases,
       sets: {
         fa
-      },
+      }
     }
   })
 
   nuxtApp.vueApp.use(vuetify)
 })
-

@@ -1,10 +1,9 @@
-
 export default function () {
   return [
     {
-      name: 'Portfolio',
+      name: 'Stock Index',
       icon: 'fa-folder-open',
-      to: '/portfolios'
+      to: '/stocks'
     },
     {
       name: 'Dividend Calendar',

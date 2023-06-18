@@ -1,15 +1,22 @@
 /* CUSTOM PROPERTIES */
 .stocker-main-body {
-  --primary: #192F82;
-  --secondary: #61A083;
-  --dark-gray: rgba(0, 0, 0, .87);
+  --primary: #192f82;
+  --secondary: #61a083;
+  --dark-gray: rgba(0, 0, 0, 0.87);
+  --light-gray: rgba(40, 40, 40, 0.67);
 
   --headerHeight: 75px;
 
   --border: #eeeeee;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   color: var(--primary);
 }
 
+.muted {
+  color: var(--light-gray);
+}

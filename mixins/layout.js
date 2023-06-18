@@ -1,3 +1,3 @@
 export default {
-  layout: context => 'desktop'// context.store.state.platform
+  layout: () => 'desktop'
 }

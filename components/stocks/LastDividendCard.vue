@@ -1,8 +1,7 @@
 <template>
   <div>
-    Ticker Symbol: {{ tickerSymbol }}
-    Ex-Dividend Date: {{ exDividendDate }}
-    Pay Date: {{ payDate }}
+    Ticker Symbol: {{ tickerSymbol }} Ex-Dividend Date: {{ exDividendDate }} Pay
+    Date: {{ payDate }}
   </div>
 </template>
 
@@ -27,5 +26,4 @@ const payDate = computed(() => {
 const tickerSymbol = computed(() => {
   return props.dividendLog.tickerSymbol
 })
-
 </script>

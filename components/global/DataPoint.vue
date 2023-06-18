@@ -1,18 +1,21 @@
 <template>
   <div :class="dataPointClass">
     <div class="stocker-data-point__key">
-      {{ dataPoint.key }}<span v-if="isMobile">:</span>
+      {{ dataPoint.label }}<span v-if="isMobile">:</span>
     </div>
     <div class="stocker-data-point__value">
-      {{ dataPoint.value }}
+      {{ dataPoint.text }}
     </div>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import type { PropType } from 'vue'
+import { DataPoint } from '~/types'
+
 const props = defineProps({
   dataPoint: {
-    type: Object,
+    type: Object as PropType<DataPoint>,
     default() {
       return { key: '', value: '' }
     }

@@ -20,13 +20,13 @@ export default {
     TopNavigation,
     NavigationDrawer
   },
-  data () {
+  data() {
     return {
       drawerOpen: false
     }
   },
   methods: {
-    toggleDrawer () {
+    toggleDrawer() {
       this.drawerOpen = !this.drawerOpen
     }
   }
@@ -43,5 +43,4 @@ export default {
   background-color: var(--background);
   overflow: scroll;
 }
-
 </style>

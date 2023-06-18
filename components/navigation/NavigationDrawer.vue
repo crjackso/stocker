@@ -6,23 +6,17 @@
       permanent
       data-test-nav-drawer
       :aria-expanded="modelValue"
-      @mouseenter="onMouseEnter"
-      @mouseleave="onMouseLeave"
       app
       tag="nav"
       class="navigation-drawer"
+      @mouseenter="onMouseEnter"
+      @mouseleave="onMouseLeave"
     >
       <div class="d-flex flex-column justify-space-between">
-        <v-list
-          nav
-          dense
-        >
+        <v-list nav dense>
           <NavigationLinks />
         </v-list>
-        <v-list
-          nav
-          dense
-        />
+        <v-list nav dense />
       </div>
     </v-navigation-drawer>
   </section>
@@ -42,33 +36,33 @@ export default {
       default: true
     }
   },
-  data () {
+  data() {
     return {
       rail: true,
       drawer: true
     }
   },
+  watch: {
+    modelValue(newVal) {
+      this.rail = !newVal
+    }
+  },
   methods: {
-    onMouseLeave () {
+    onMouseLeave() {
       if (!this.modelValue) {
         this.rail = true
       }
     },
-    onMouseEnter () {
+    onMouseEnter() {
       this.rail = false
-    }
-  },
-  watch: {
-    modelValue (newVal) {
-      this.rail = !newVal
     }
   }
 }
 </script>
 
 <style scoped>
-  :deep(.navigation-drawer) {
-    top: var(--headerHeight);
-    border-right: 2px solid var(--secondary);
-  }
+:deep(.navigation-drawer) {
+  top: var(--headerHeight);
+  border-right: 2px solid var(--secondary);
+}
 </style>

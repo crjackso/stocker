@@ -4,6 +4,7 @@
     <v-list>
       <v-list-item
         v-for="(group, key) in stockDividendLogsByDate"
+        :key="key"
         :title="key"
         class="pt-3"
         elevation="2"

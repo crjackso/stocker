@@ -1,10 +1,14 @@
+export const groupBy = (x: Array<any>, f: Function) =>
+  x.reduce((a, b, i) => ((a[f(b, i, x)] ||= []).push(b), a), {})
 
-export const groupBy = (x: Array<any>, f: Function) => x.reduce((a, b, i) => ((a[f(b, i, x)] ||= []).push(b), a), {})
+export const toCurrency = (value: number | undefined): string => {
+  if (!value) {
+    return ''
+  }
 
-export const toCurrency = (value: number) => {
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
-    currency: 'USD',
+    currency: 'USD'
   })
 
   return formatter.format(value)

@@ -5,9 +5,7 @@ export default defineNuxtConfig({
     '@/assets/styles/main.css',
     '@fortawesome/fontawesome-svg-core/styles.css'
   ],
-  modules: [
-    '@nuxtjs/device'
-  ],
+  modules: ['@nuxtjs/device'],
   build: {
     transpile: [
       'vuetify',
@@ -15,11 +13,20 @@ export default defineNuxtConfig({
       '@fortawesome/free-solid-svg-icons',
       '@fortawesome/free-regular-svg-icons',
       '@fortawesome/vue-fontawesome'
-    ],
+    ]
+  },
+  nitro: {
+    devProxy: {
+      '/api/': {
+        target: 'http://127.0.0.1:3333/',
+        changeOrigin: true
+        // rewrite: (path: string) => path.replace(/^\api/, '')
+      }
+    }
   },
   vite: {
     define: {
-      'process.env.DEBUG': false,
+      'process.env.DEBUG': false
     },
     css: {
       preprocessorOptions: {
@@ -35,5 +42,10 @@ export default defineNuxtConfig({
   ],
   imports: {
     dirs: ['models', 'lib']
+  },
+  runtimeConfig: {
+    public: {
+      baseURL: 'http://127.0.0.1:3333'
+    }
   }
 })

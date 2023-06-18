@@ -1,17 +1,47 @@
-import dayjs from "dayjs"
+import CompanyProfile from './CompanyProfile'
+import { toCurrency } from '~/lib/utils/general'
 
 class StockPreviousClose {
-  constructor({ price, asOfDateUnix }: { price: number, asOfDateUnix: number }) {
+  constructor({
+    ticker,
+    price,
+    asOfDate,
+    fiftyWeekLow,
+    fiftyWeekHigh,
+    companyProfile
+  }: {
+    ticker: string
+    price: number
+    asOfDate: string
+    fiftyWeekLow?: number
+    fiftyWeekHigh?: number
+    companyProfile?: CompanyProfile
+  }) {
+    this.ticker = ticker
     this.price = price
-    this.asOfDateUnix = asOfDateUnix
+    this.fiftyWeekLow = fiftyWeekLow
+    this.fiftyWeekHigh = fiftyWeekHigh
+    this.companyProfile = companyProfile
+    this.asOfDate = asOfDate
+
+    this.priceFormatted = toCurrency(price)
+    this.fiftyWeekLowFormatted = this.fiftyWeekLow
+      ? toCurrency(fiftyWeekLow)
+      : undefined
+    this.fiftyWeekHighFormatted = this.fiftyWeekHigh
+      ? toCurrency(fiftyWeekHigh)
+      : undefined
   }
 
+  ticker: string
   price: number
-  asOfDateUnix: number
-
-  public asOfDate() {
-    return dayjs(this.asOfDateUnix).format('YYYY-MM-DD').toString()
-  }
+  priceFormatted: string
+  asOfDate: string
+  fiftyWeekLow?: number
+  fiftyWeekHigh?: number
+  fiftyWeekLowFormatted?: string
+  fiftyWeekHighFormatted?: string
+  companyProfile?: CompanyProfile
 }
 
 export default StockPreviousClose

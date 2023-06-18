@@ -1,7 +1,7 @@
 <template>
   <div class="log-summary pt-2">
     <h3>Summary</h3>
-    <data-point v-for="point in dataPoints" :dataPoint="point" />
+    <data-points :data-points="dataPoints" />
   </div>
 </template>
 
@@ -17,13 +17,11 @@ const props = defineProps({
 const dataPoints = computed(() => {
   return [
     {
-      key: 'Total Payment Amount',
-      value: props.stockDividendLogs.totalCashAmount()
+      label: 'Total Payment Amount',
+      text: props.stockDividendLogs.totalCashAmount()
     }
   ]
 })
-
-// Methods
 </script>
 
 <style scoped lang="scss">

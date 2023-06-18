@@ -12,7 +12,7 @@
           />
         </v-col>
         <v-col cols="12" md="8">
-          <dividends-log
+          <dividends-date-log
             :mode="logDetailMode"
             :stock-dividend-logs="activeDividendLogs"
             :pay-date="activeModeDate"

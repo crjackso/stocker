@@ -37,11 +37,14 @@ const props = defineProps({
   },
   mode: {
     type: String,
+    required: true,
     validator(value: string) {
       return ['month', 'day'].includes(value)
     }
   }
 })
+
+defineEmits(['close'])
 
 // Computed
 const noDividends = computed(() => {

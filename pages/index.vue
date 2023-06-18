@@ -1,5 +1,5 @@
 <template>
-  hello stocker!
+  <span> hello stocker!</span>
 </template>
 
 <script>
@@ -8,7 +8,7 @@ import layoutMixin from '~/mixins/layout'
 export default {
   name: 'IndexComponent',
   mixins: [layoutMixin],
-  head () {
+  head() {
     return {
       title: 'Dashboard'
     }
