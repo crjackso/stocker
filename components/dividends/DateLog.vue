@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts" setup>
-import { formatDate, monthName } from '~/lib/utils/date'
+import { formatDate, monthName } from '~/utils/date'
 
 const props = defineProps({
   stockDividendLogs: {

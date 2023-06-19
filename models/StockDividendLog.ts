@@ -1,5 +1,5 @@
 import StockDetails from './StockDetails'
-import { toDate, formatDate } from '~/lib/utils/date'
+import { toDate, formatDate } from '~/utils/date'
 
 class StockDividendLog {
   constructor({

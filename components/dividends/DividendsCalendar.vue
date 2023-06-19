@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { currentDate } from '~/lib/utils/date'
+import { currentDate } from '~/utils/date'
 import StockDividendLogs from '~/models/StockDividendLogs'
 
 // Props

@@ -1,5 +1,5 @@
 import CompanyProfile from './CompanyProfile'
-import { toCurrency } from '~/lib/utils/general'
+import { toCurrency } from '~/utils/general'
 
 class StockPreviousClose {
   constructor({

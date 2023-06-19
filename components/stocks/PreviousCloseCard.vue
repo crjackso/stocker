@@ -23,6 +23,7 @@
         :price="previousClose.price"
         :low="previousClose.fiftyWeekLow"
         :high="previousClose.fiftyWeekHigh"
+        class="my-2"
       />
       <data-points :data-points="summaryPoints" />
     </v-card-text>
@@ -48,11 +49,7 @@ const props = defineProps({
 })
 
 const summaryPoints = computed((): Array<DataPoint> => {
-  return [
-    { label: 'Price', text: props.previousClose.priceFormatted },
-    { label: '52 Week Low', text: props.previousClose.fiftyWeekLow },
-    { label: '52 Week High', text: props.previousClose.fiftyWeekHigh }
-  ]
+  return [{ label: 'As Of', text: props.previousClose.asOfDate }]
 })
 
 const companyName = computed(() => {

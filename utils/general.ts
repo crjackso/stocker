@@ -13,3 +13,7 @@ export const toCurrency = (value: number | undefined): string => {
 
   return formatter.format(value)
 }
+
+export const toPercentage = (value: number, precision = 0) => {
+  return `${(value * 100).toFixed(precision)}%`
+}

@@ -1,6 +1,6 @@
 import StockDividendLog from './StockDividendLog'
-import { groupBy, toCurrency } from '~/lib/utils/general'
-import { datesAreEqual, parseDate } from '~/lib/utils/date'
+import { groupBy, toCurrency } from '~/utils/general'
+import { datesAreEqual, parseDate } from '~/utils/date'
 
 class StockDividendLogs {
   constructor(stockDividendLogs: Array<StockDividendLog> = []) {

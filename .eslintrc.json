@@ -10,5 +10,6 @@
     "comma-dangle": "off",
     "no-unused-vars": "error",
     "prettier/prettier": "error"
-  }
+  },
+  "plugins": ["vitest"]
 }
