@@ -2,18 +2,14 @@
   <v-card
     class="mx-auto"
     max-width="368"
+    :loading="loading && 'secondary'"
     :title="previousClose.ticker"
     :subtitle="companyName"
+    :disabled="loading"
   >
     <v-divider color="var(--secondary)" thickness="4"></v-divider>
 
     <v-card-text>
-      <v-card-item
-        class="pa-0"
-        title="Current Price"
-        :subtitle="previousClose.priceFormatted"
-      />
-
       <div>
         <strong class="pr-3">Current Price:</strong>
         <span>{{ previousClose.priceFormatted }}</span>
@@ -45,6 +41,10 @@ const props = defineProps({
   previousClose: {
     type: Object as PropType<StockPreviousClose>,
     required: true
+  },
+  loading: {
+    type: Boolean,
+    default: false
   }
 })
 

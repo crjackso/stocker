@@ -1,6 +1,6 @@
 <template>
   <div v-if="hasAllInformation">
-    <span data-fifty-two-week-header>52 Week High/Low Info</span>
+    <strong data-fifty-two-week-header>52 Week High/Low Info:</strong>
     <v-slider
       readonly
       show-ticks

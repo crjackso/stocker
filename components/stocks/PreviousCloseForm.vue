@@ -5,8 +5,16 @@
         v-model="tickers"
         :rules="rules"
         label="Enter ticker symbols (comma-delimited)"
-      ></v-text-field>
-      <v-btn type="submit" block class="mt-2" :disabled="!valid">Submit</v-btn>
+      />
+      <v-btn
+        type="submit"
+        block
+        class="mt-2"
+        color="secondary"
+        :disabled="disableSubmit"
+      >
+        Submit
+      </v-btn>
     </v-form>
   </v-sheet>
 </template>
@@ -19,6 +27,12 @@ const tickers = ref('')
 
 const emit = defineEmits(['submit'])
 
+const props = defineProps({
+  loading: {
+    type: Boolean
+  }
+})
+
 const validateTickerSymbols = (value: string | undefined): Boolean | string => {
   if (!value) return 'At least one ticker symbol is required'
 
@@ -30,6 +44,10 @@ const validateTickerSymbols = (value: string | undefined): Boolean | string => {
 }
 
 const rules: any[] = [(value: any) => validateTickerSymbols(value)]
+
+const disableSubmit = computed(() => {
+  return !valid.value || props.loading
+})
 
 const submit = async (event: SubmitEventPromise) => {
   const results = await event
