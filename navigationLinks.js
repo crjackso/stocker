@@ -8,7 +8,7 @@ export default function () {
     {
       name: 'Dividend Calendar',
       icon: 'fa-calendar-days',
-      to: '/dividends/calendar'
+      to: '/dividends'
     }
   ]
 }

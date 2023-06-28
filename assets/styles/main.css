@@ -20,3 +20,7 @@ h4 {
 .muted {
   color: var(--light-gray);
 }
+
+.main-logo {
+  height: calc(var(--headerHeight) - 40px);
+}

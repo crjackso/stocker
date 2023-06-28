@@ -24,6 +24,6 @@ const payDate = computed(() => {
 })
 
 const tickerSymbol = computed(() => {
-  return props.dividendLog.tickerSymbol
+  return props.dividendLog.ticker
 })
 </script>

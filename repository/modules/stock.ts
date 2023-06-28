@@ -2,7 +2,11 @@ import StockPreviousClose from '~/models/StockPreviousClose'
 import StockDividendLogs from '~/models/StockDividendLogs'
 import HttpFactory from '~/repository/factory'
 import { IStockApi } from '~/types/Stocks'
-import { IError } from '~/types'
+import {
+  IError,
+  PortfolioDividendsResponse,
+  StockDividendLogAttrs
+} from '~/types'
 
 class StockModule extends HttpFactory implements IStockApi {
   async previousClose(tickers: string): Promise<StockPreviousClose[]> {
@@ -18,8 +22,16 @@ class StockModule extends HttpFactory implements IStockApi {
     return response as StockPreviousClose[]
   }
 
-  async portfolioDividends(): Promise<StockDividendLogs> {
-    return await this.get<StockDividendLogs>('api/dividends')
+  async portfolioDividends(tickers: string): Promise<StockDividendLogs> {
+    const response = await this.get<PortfolioDividendsResponse>(
+      'api/stocks/dividends',
+      {
+        tickers
+      }
+    )
+
+    const { stockDividendLogs } = response
+    return new StockDividendLogs({ stockDividendLogAttrs: stockDividendLogs })
   }
 }
 

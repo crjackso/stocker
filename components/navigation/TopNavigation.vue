@@ -55,9 +55,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.main-logo {
-  height: calc(var(--headerHeight) - 40px);
-}
-</style>

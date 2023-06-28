@@ -1,7 +1,7 @@
 <template>
   <div class="log-summary pt-2">
     <h3>Summary</h3>
-    <data-points :data-points="dataPoints" />
+    <data-points :data-points="summaryPoints" />
   </div>
 </template>
 
@@ -14,7 +14,7 @@ const props = defineProps({
 })
 
 // Computed
-const dataPoints = computed(() => {
+const summaryPoints = computed(() => {
   return [
     {
       label: 'Total Payment Amount',

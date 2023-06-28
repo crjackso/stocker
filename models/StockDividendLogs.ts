@@ -1,15 +1,28 @@
 import StockDividendLog from './StockDividendLog'
 import { groupBy, toCurrency } from '~/utils/general'
 import { datesAreEqual, parseDate } from '~/utils/date'
+import { StockDividendLogAttrs } from '~/types'
 
 class StockDividendLogs {
-  constructor(stockDividendLogs: Array<StockDividendLog> = []) {
-    this.stockDividendLogs = stockDividendLogs
+  constructor(logs?: {
+    stockDividendLogs?: StockDividendLog[]
+    stockDividendLogAttrs?: StockDividendLogAttrs[]
+  }) {
+    if (logs?.stockDividendLogs) {
+      this.stockDividendLogs = logs.stockDividendLogs
+    } else if (logs?.stockDividendLogAttrs) {
+      this.stockDividendLogs = logs.stockDividendLogAttrs.map(
+        (attrs) => new StockDividendLog(attrs)
+      )
+    } else {
+      this.stockDividendLogs = []
+    }
   }
 
   stockDividendLogs: StockDividendLog[]
 
   public totalCashAmount() {
+    debugger
     const totalAmount = this.stockDividendLogs.reduce((amount, log) => {
       amount += log.cashAmount || 0
       return amount
@@ -37,7 +50,7 @@ class StockDividendLogs {
       }
     )
 
-    return new StockDividendLogs(stockDividendLogs)
+    return new StockDividendLogs({ stockDividendLogs })
   }
 
   public forMonth(month: number, year: number): StockDividendLogs {
@@ -50,7 +63,7 @@ class StockDividendLogs {
       }
     )
 
-    return new StockDividendLogs(stockDividendLogs)
+    return new StockDividendLogs({ stockDividendLogs })
   }
 
   public forDate(date?: Date): StockDividendLogs {
@@ -62,7 +75,7 @@ class StockDividendLogs {
       }
     )
 
-    return new StockDividendLogs(stockDividendLogs)
+    return new StockDividendLogs({ stockDividendLogs })
   }
 
   public payDates(): (Date | undefined)[] {
@@ -76,10 +89,6 @@ class StockDividendLogs {
   public count() {
     return this.stockDividendLogs.length
   }
-
-  // public logs () {
-  //   return this.stockDividendLogs
-  // }
 }
 
 export default StockDividendLogs

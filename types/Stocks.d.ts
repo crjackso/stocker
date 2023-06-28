@@ -4,5 +4,5 @@ import StockModule from '~~/repository/modules/stock'
 
 export interface IStockApi {
   previousClose: (ticker: string) => Promise<StockPreviousClose[]>
-  portfolioDividends: () => Promise<StockDividendLogs>
+  portfolioDividends: (ticker: string) => Promise<StockDividendLogs>
 }

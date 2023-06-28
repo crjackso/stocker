@@ -1,24 +1,18 @@
+import { StockDetailsAttrs } from '~/types'
+
 class StockDetails {
-  constructor({
-    companyName,
-    tickerSymbol,
-    logoUrl
-  }: {
-    companyName: string
-    tickerSymbol: string
-    logoUrl: string
-  }) {
+  constructor({ companyName, ticker, logoUrl }: StockDetailsAttrs) {
     this.logoUrl = logoUrl
     this.companyName = companyName
-    this.tickerSymbol = tickerSymbol
+    this.ticker = ticker
   }
 
   logoUrl: string
   companyName: string
-  tickerSymbol: string
+  ticker: string
 
   public fullName() {
-    return `(${this.tickerSymbol}) ${this.companyName}`
+    return `(${this.ticker}) ${this.companyName}`
   }
 }
 

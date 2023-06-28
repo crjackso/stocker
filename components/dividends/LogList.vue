@@ -18,7 +18,7 @@
           <template #activator>
             <v-list-item
               v-for="log in group"
-              :key="log.tickerSymbol"
+              :key="log.ticker"
               :title="log.stockDetails.fullName()"
               :subtitle="logCardSubtitle(log)"
             >
