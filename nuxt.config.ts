@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   css: [
     'vuetify/lib/styles/main.sass',
-    '@/assets/styles/main.css',
+    '@/assets/styles/main.scss',
     '@fortawesome/fontawesome-svg-core/styles.css'
   ],
   modules: ['@nuxtjs/device'],
@@ -20,7 +20,6 @@ export default defineNuxtConfig({
       '/api/': {
         target: 'http://127.0.0.1:3333/',
         changeOrigin: true
-        // rewrite: (path: string) => path.replace(/^\api/, '')
       }
     }
   },
@@ -31,7 +30,7 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: '@use "@/assets/styles/main.css" as *;'
+          additionalData: '@use "@/assets/styles/colors.scss" as *;'
         }
       }
     }

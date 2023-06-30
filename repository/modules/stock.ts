@@ -2,11 +2,7 @@ import StockPreviousClose from '~/models/StockPreviousClose'
 import StockDividendLogs from '~/models/StockDividendLogs'
 import HttpFactory from '~/repository/factory'
 import { IStockApi } from '~/types/Stocks'
-import {
-  IError,
-  PortfolioDividendsResponse,
-  StockDividendLogAttrs
-} from '~/types'
+import { IError, PortfolioDividendsResponse } from '~/types'
 
 class StockModule extends HttpFactory implements IStockApi {
   async previousClose(tickers: string): Promise<StockPreviousClose[]> {

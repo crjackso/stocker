@@ -22,7 +22,6 @@ class StockDividendLogs {
   stockDividendLogs: StockDividendLog[]
 
   public totalCashAmount() {
-    debugger
     const totalAmount = this.stockDividendLogs.reduce((amount, log) => {
       amount += log.cashAmount || 0
       return amount

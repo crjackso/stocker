@@ -14,16 +14,23 @@ class StockDividendLog {
     this.exDividendDate = toDate(exDividendDate)
     this.payDate = toDate(payDate)
     this.payDateFormatted = formatDate(payDate)
-    this.stockDetails = new StockDetails(stockDetails)
     this.cashAmount = cashAmount
+
+    if (stockDetails) {
+      this.stockDetails = new StockDetails(stockDetails)
+    }
   }
 
   cashAmount: number | undefined
   exDividendDate: Date | undefined
   payDate: Date | undefined
-  stockDetails: StockDetails
+  stockDetails?: StockDetails
   payDateFormatted: string | undefined
-  ticker: string | undefined
+  ticker: string
+
+  public name(): string {
+    return this.stockDetails?.fullName() || this.ticker
+  }
 }
 
 export default StockDividendLog

@@ -19,7 +19,7 @@
             <v-list-item
               v-for="log in group"
               :key="log.ticker"
-              :title="log.stockDetails.fullName()"
+              :title="log.name()"
               :subtitle="logCardSubtitle(log)"
             >
               <template #prepend>
