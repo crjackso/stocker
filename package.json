@@ -46,11 +46,9 @@
   },
   "dependencies": {
     "@nuxtjs/device": "3.1.0",
-    "@pinia/nuxt": "^0.4.11",
     "@popperjs/core": "2.11.7",
     "dayjs": "1.11.7",
     "ohmyfetch": "0.4.21",
-    "pinia": "^2.1.4",
     "sass": "1.62.0",
     "v-calendar": "3.0.3",
     "vuetify": "3.1.14"

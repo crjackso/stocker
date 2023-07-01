@@ -2,7 +2,6 @@
   <div>
     <h1>Dividends Calendar</h1>
     <dividends-calendar :stock-dividend-logs="stockDividendLogs" />
-    <br />
   </div>
 </template>
 
@@ -25,7 +24,7 @@ const fetchPortfolioDividends = async () => {
   stockDividendLogs.value = await $api.stocks.portfolioDividends(portfolio)
 }
 
-const portfolio = 'gpn,avuv'
+const portfolio = 'avuv, gpn, mpq , schd, smh, tfc , tgt , vnq , voo , vti'
 
 // Lifecycle
 onMounted(async () => {
