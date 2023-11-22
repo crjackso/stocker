@@ -1,4 +1,4 @@
-import { StockDetailsAttrs } from '~/types'
+import type { StockDetailsAttrs } from '~/types'
 
 class StockDetails {
   constructor({ companyName, ticker, logoUrl }: StockDetailsAttrs) {

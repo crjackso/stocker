@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { SubmitEventPromise } from 'vuetify/lib/framework.mjs'
+import type { SubmitEventPromise } from 'vuetify/lib/framework.mjs'
 
 const valid = ref(false)
 const tickers = ref('')

@@ -1,7 +1,7 @@
 import { $fetch, FetchOptions } from 'ohmyfetch'
 import { defineNuxtPlugin } from '#app'
 import StockModule from '~~/repository/modules/stock'
-import { IApiInstance } from '~/types'
+import type { IApiInstance } from '~/types'
 
 export default defineNuxtPlugin((nuxtApp) => {
   const fetchOptions: FetchOptions = {

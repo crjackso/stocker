@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { DataPoint } from '~/types'
+import type { DataPoint } from '~/types'
 
 defineProps({
   dataPoints: {

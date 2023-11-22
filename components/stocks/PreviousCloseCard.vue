@@ -35,7 +35,7 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
 import StockPreviousClose from '~/models/StockPreviousClose'
-import { DataPoint } from '~/types'
+import type { DataPoint } from '~/types'
 
 const props = defineProps({
   previousClose: {

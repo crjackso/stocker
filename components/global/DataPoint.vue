@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import type { PropType } from 'vue'
-import { DataPoint } from '~/types'
+import type { DataPoint } from '~/types'
 
 const props = defineProps({
   dataPoint: {

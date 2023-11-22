@@ -1,6 +1,6 @@
 <template>
   <section>
-    <page-header text="Stock Search"></page-header>
+    <page-header text="Stock Search" />
 
     <stocks-previous-close-form
       class="mb-3"

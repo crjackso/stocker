@@ -1,5 +1,5 @@
-import { StockDividendLogAttrs } from '~/types'
 import StockDetails from './StockDetails'
+import type { StockDividendLogAttrs } from '~/types'
 import { toDate, formatDate } from '~/utils/date'
 
 class StockDividendLog {

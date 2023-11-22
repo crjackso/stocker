@@ -1,7 +1,7 @@
 import StockDividendLog from './StockDividendLog'
 import { groupBy, toCurrency } from '~/utils/general'
 import { datesAreEqual, parseDate } from '~/utils/date'
-import { StockDividendLogAttrs } from '~/types'
+import type { StockDividendLogAttrs } from '~/types'
 
 class StockDividendLogs {
   constructor(logs?: {

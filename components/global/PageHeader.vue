@@ -8,6 +8,7 @@
       :class="{ 'pl-4': onMobileDevice }"
       class="page-header"
     >
+      {{ text }}
       <slot />
     </h1>
     <slot name="actions" />
