@@ -1,12 +1,8 @@
 import StockPreviousClose from '~/models/StockPreviousClose'
 import StockDividendLogs from '~/models/StockDividendLogs'
-import StockModule from '~~/repository/modules/stock'
+import StockApi from '~~/apis/StockApi'
 
 /* API Gateway for Stocker */
-export interface IApiInstance {
-  stocks: StockModule
-}
-
 export interface IError {
   error: string
 }

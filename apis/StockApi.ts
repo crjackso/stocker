@@ -1,14 +1,16 @@
+import BaseApi from './BaseApi'
 import StockPreviousClose from '~/models/StockPreviousClose'
 import StockDividendLogs from '~/models/StockDividendLogs'
-import HttpFactory from '~/repository/factory'
-import type { IStockApi } from '~/types/Stocks'
 import type { IError, PortfolioDividendsResponse } from '~/types'
+import type IStockApi from '~/types/IStockApi'
 
-class StockModule extends HttpFactory implements IStockApi {
+class StockApi extends BaseApi implements IStockApi {
   async previousClose(tickers: string): Promise<StockPreviousClose[]> {
     const response = await this.get<StockPreviousClose[] | IError>(
-      'api/stocks',
-      { tickers }
+      '/api/stocks',
+      {
+        tickers
+      }
     )
 
     if ('error' in response) {
@@ -20,7 +22,7 @@ class StockModule extends HttpFactory implements IStockApi {
 
   async portfolioDividends(tickers: string): Promise<StockDividendLogs> {
     const response = await this.get<PortfolioDividendsResponse>(
-      'api/stocks/dividends',
+      '/api/stocks/dividends',
       {
         tickers
       }
@@ -31,4 +33,4 @@ class StockModule extends HttpFactory implements IStockApi {
   }
 }
 
-export default StockModule
+export default StockApi

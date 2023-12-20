@@ -8,10 +8,8 @@ RUN yarn install
 
 COPY . .
 
-ENV NODE_VERSION=21.2.0
-ENV NITRO_PORT=3010
-ENV PATH=node_modules/.bin:$PATH
+EXPOSE $NITRO_PORT
 
-EXPOSE 3010
+ENV PATH=node_modules/.bin:$PATH
 
 CMD ["yarn", "dev"]

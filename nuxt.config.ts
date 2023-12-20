@@ -18,8 +18,8 @@ export default defineNuxtConfig({
   nitro: {
     devProxy: {
       '/api/': {
-        target: 'http://127.0.0.1:3333/',
-        changeOrigin: true
+        target: 'http://stocker-api:3333/',
+        changeOrigin: false
       }
     }
   },
@@ -41,10 +41,5 @@ export default defineNuxtConfig({
   ],
   imports: {
     dirs: ['models', 'lib']
-  },
-  runtimeConfig: {
-    public: {
-      baseURL: 'http://127.0.0.1:3333'
-    }
   }
 })

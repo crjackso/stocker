@@ -31,7 +31,7 @@ useHead({
   title: 'Portfolios'
 })
 
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms))
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 const onPreviousCloseSubmit = async (tickerSymbols: string) => {
   loading.value = true
