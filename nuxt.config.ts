@@ -15,6 +15,14 @@ export default defineNuxtConfig({
       '@fortawesome/vue-fontawesome'
     ]
   },
+  nitro: {
+    devProxy: {
+      '/api/': {
+        target: 'http://stocker-api:3011/',
+        changeOrigin: false
+      }
+    }
+  },
   vite: {
     define: {
       'process.env.DEBUG': false
