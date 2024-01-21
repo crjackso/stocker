@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "rm -rf /tmp/nitro && nuxt dev",
     "generate": "nuxt generate",
     "lint:js": "eslint --ext .vue,.ts,.js,.mjs .",
     "lint:style": "stylelint **/*.{pcss,css,vue}",

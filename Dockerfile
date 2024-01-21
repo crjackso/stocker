@@ -12,4 +12,9 @@ EXPOSE $NITRO_PORT
 
 ENV PATH=node_modules/.bin:$PATH
 
-CMD ["yarn", "dev"]
+# dev
+# CMD ["yarn", "dev"]
+
+# production
+RUN yarn build
+CMD ["node", ".output/server/index.mjs"]

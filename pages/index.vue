@@ -1,17 +1,15 @@
 <template>
-  <span> hello stocker!</span>
+  <section>
+    <h1>Dashboard</h1>
+  </section>
 </template>
 
-<script>
-import layoutMixin from '~/mixins/layout'
+<script setup>
+definePageMeta({
+  layout: 'desktop'
+})
 
-export default {
-  name: 'IndexComponent',
-  mixins: [layoutMixin],
-  head() {
-    return {
-      title: 'Dashboard'
-    }
-  }
-}
+useHead({
+  title: 'Dashboard'
+})
 </script>
