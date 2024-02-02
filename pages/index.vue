@@ -1,11 +1,11 @@
 <template>
   <section>
     <h1>Dashboard</h1>
-    <article>Welcome to the Stocker dashboard.</article>
+    <stocks-portfolio-summary :tickers="portfolioTickers" />
   </section>
 </template>
 
-<script setup>
+<script setup lang="ts">
 definePageMeta({
   layout: 'desktop'
 })
@@ -13,4 +13,6 @@ definePageMeta({
 useHead({
   title: 'Dashboard'
 })
+
+const portfolioTickers = ref<string>('AMGN,AAPL,GPN,AVUV,VTI,TFC')
 </script>
