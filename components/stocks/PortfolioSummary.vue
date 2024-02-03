@@ -42,8 +42,16 @@ const columnCount = computed(() =>
   previousCloseQuotes.value.length === 1 ? 12 : 6
 )
 
+const hasEnteredTickers = computed(() => {
+  return !!props.tickers.length
+})
+
 const noResultsFound = computed(() => {
-  return previousCloseQuotes.value.length === 0 && !loading.value
+  return (
+    hasEnteredTickers.value &&
+    previousCloseQuotes.value.length === 0 &&
+    !loading.value
+  )
 })
 
 const fetchTickerData = async () => {
