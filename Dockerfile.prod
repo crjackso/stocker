@@ -8,7 +8,6 @@ RUN yarn install
 
 COPY . .
 
-ENV PATH=node_modules/.bin:$PATH
+RUN yarn build
 
-# dev
-CMD ["yarn", "dev"]
+CMD ["node", ".output/server/index.mjs"]
