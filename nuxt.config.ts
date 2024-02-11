@@ -1,3 +1,5 @@
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   css: [
@@ -5,7 +7,15 @@ export default defineNuxtConfig({
     '@/assets/styles/main.scss',
     '@fortawesome/fontawesome-svg-core/styles.css'
   ],
-  modules: ['@nuxtjs/device'],
+  modules: [
+    '@nuxtjs/device',
+    (_options, nuxt) => {
+      nuxt.hooks.hook('vite:extendConfig', (config) => {
+        // @ts-expect-error
+        config.plugins.push(vuetify({ autoImport: true }))
+      })
+    }
+  ],
   build: {
     transpile: [
       'vuetify',
@@ -27,6 +37,11 @@ export default defineNuxtConfig({
         scss: {
           additionalData: '@use "@/assets/styles/colors.scss" as *;'
         }
+      }
+    },
+    vue: {
+      template: {
+        transformAssetUrls
       }
     }
   },

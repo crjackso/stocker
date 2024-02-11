@@ -1,7 +1,4 @@
 import { createVuetify, type ThemeDefinition } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
-
 import { aliases, fa } from 'vuetify/iconsets/fa-svg'
 
 const myCustomLightTheme: ThemeDefinition = {
@@ -20,8 +17,6 @@ const myCustomLightTheme: ThemeDefinition = {
 export default defineNuxtPlugin((nuxtApp) => {
   const vuetify = createVuetify({
     ssr: true,
-    components,
-    directives,
     theme: {
       defaultTheme: 'myCustomLightTheme',
       themes: {
