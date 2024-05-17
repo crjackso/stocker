@@ -1,52 +1,49 @@
 <template>
-  <stocks-previous-close-form
-    class="mb-3"
-    :pending="pending"
-    @submit="onTickerUpdate"
-  />
+  <section>
+    <div v-if="error">
+      An expected error occurred while fetching market movers.
+      {{ error.message }}
+    </div>
 
-  <v-divider />
+    <stocks-previous-close-form class="mb-3" :pending="pending" @submit="onTickerUpdate" />
 
-  <div v-show="pending">Loading...</div>
+    <v-divider />
 
-  <section v-if="previousCloseQuotes">
-    <stocks-portfolio-summary :previous-close-quotes="previousCloseQuotes" />
+    <div v-show="pending">Loading...</div>
+
+    <stocks-portfolio-summary :stocks="stocks" />
 
     <div v-if="noResultsFound" class="text-center">
       <v-icon icon="fa-circle-exclamation" color="primary" />
       No results found
     </div>
-
-    <div v-if="error">An error occurred: {{ error }}</div>
   </section>
-
-  <div v-if="error">Something Happened! {{ error }}</div>
 </template>
 
 <script setup lang="ts">
-import { gql } from 'graphql-tag'
-import type { StockPreviousClose } from '~/types/stocks'
+import gql from 'graphql-tag'
+import useTickers from '~/composables/stocks/useTickers'
 
-const { $api } = useNuxtApp()
 const tickers = ref('')
 
 const noResultsFound = computed(() => {
-  return (
-    !pending.value &&
-    tickers.value?.length &&
-    !previousCloseQuotes.value?.length
-  )
+  return !pending.value && tickers.value?.length && !stocks.value?.length
 })
+
+const { formattedTickers } = useTickers(tickers)
 
 const query = gql`
   query stocks($input: StockWhereInput!) {
     getStocks(input: $input) {
       id
-      tickerSymbol
+      assetType
       companyName
-      lastPrice
       fiftyTwoWeekLow
       fiftyTwoWeekHigh
+      lastPrice
+      lastPriceAsOfDate
+      logoUrl
+      tickerSymbol
       updatedAt
     }
   }
@@ -62,20 +59,22 @@ const variables = computed(() => {
   }
 })
 
-const formattedTickers = computed(() => {
-  return tickers.value.split(',').map((item) => item.trim())
-})
-
-const fetchStocks = async (): Promise<StockPreviousClose[]> => {
-  return await $api.query<StockPreviousClose[]>(query, variables.value)
+const fetchOptions = {
+  default: () => [],
+  transform: mapStocks,
+  immediate: false
 }
 
+const pending = computed(() => {
+  return status.value === 'pending'
+})
+
 const {
-  data: previousCloseQuotes,
+  data: stocks,
+  status,
   error,
-  pending,
   refresh
-} = await useAsyncData<StockPreviousClose[]>(fetchStocks)
+} = await useGraphql(`stocks:${tickers.value}`, query, variables, fetchOptions)
 
 const onTickerUpdate = async (updatedTickers: string) => {
   tickers.value = updatedTickers

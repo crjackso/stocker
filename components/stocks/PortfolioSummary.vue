@@ -3,12 +3,12 @@
     <v-container>
       <v-row>
         <v-col
-          v-for="quote in previousCloseQuotes"
-          :key="quote.tickerSymbol"
+          v-for="stock in stocks"
+          :key="stock.tickerSymbol"
           :sm="columnCount"
           cols="12"
         >
-          <stocks-previous-close-card :previous-close="quote" class="my-3" />
+          <stocks-previous-close-card :stock="stock" :pending="pending" class="my-3" />
         </v-col>
       </v-row>
     </v-container>
@@ -16,17 +16,18 @@
 </template>
 
 <script setup lang="ts">
-import type { StockPreviousClose } from '~/types/stocks'
+import type { Stock } from '~/types/stocks'
 
 const props = defineProps({
-  previousCloseQuotes: {
-    type: Array<StockPreviousClose>,
+  stocks: {
+    type: Array<Stock>,
     required: true
-  }
+  },
+  pending: { type: Boolean }
 })
 
 const columnCount = computed(() =>
-  props.previousCloseQuotes.length === 1 ? 12 : 6
+  props.stocks.length === 1 ? 12 : 6
 )
 </script>
 

@@ -31,6 +31,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     stockerApiUrl: 'http://api:3011',
     public: {
+      stockerApiUrl: 'http://stocker.localhost/api',
       graphql: {
         clients: {
           default: {

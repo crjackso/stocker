@@ -10,5 +10,6 @@ useHead({
   title: 'Dividend Calendar'
 })
 
-const tickers = 'avuv, gpn, mpq, schd, smh, tfc, tgt, vnq, voo, vti'
+// TODO
+const tickers = 'VTI, VOO, TGT, SMH, SCHD, SCHB, GPN, FTEC, AVUV, AMZN, AMGN, AAPL, LOW, VGT'
 </script>

@@ -8,6 +8,8 @@
   --headerHeight: 75px;
 
   --border: #eeeeee;
+  --positive: rgb(13, 124, 13);
+  --negative: rgb(162, 24, 24);
 }
 
 h1,
@@ -23,4 +25,8 @@ h4 {
 
 .main-logo {
   height: calc(var(--headerHeight) - 40px);
+}
+
+.font-size-small {
+  font-size: small;
 }

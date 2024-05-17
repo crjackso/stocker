@@ -6,21 +6,25 @@
 </template>
 
 <script lang="ts" setup>
+import useDividends from '~/composables/dividends/useDividends';
 import type { StockDividendLog } from '~/types/stocks'
-import { totalCashAmount } from '~/utils/dividends'
+
 
 const props = defineProps({
   stockDividendLogs: {
     type: Array<StockDividendLog>,
-    required: true
-  }
-})
+      required: true
+    }
+  })
+
+  const logs = computed(() => props.stockDividendLogs)
+  const { totalCashAmount } = useDividends(logs)
 
 const summaryPoints = computed(() => {
   return [
     {
       label: 'Total Payment Amount',
-      text: totalCashAmount(props.stockDividendLogs)
+      text: totalCashAmount.value
     }
   ]
 })

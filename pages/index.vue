@@ -1,6 +1,8 @@
 <template>
   <section>
     <h1>Dashboard</h1>
+
+    <markets-mover-lists />
   </section>
 </template>
 

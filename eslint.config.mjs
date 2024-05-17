@@ -7,7 +7,7 @@ export default withNuxt({
     '@stylistic': stylistic
   },
   rules: {
-    'comma-dangle': 'off',
+    'comma-dangle': 'error',
     'no-unused-vars': 'error',
     'no-useless-constructor': 'off',
     '@typescript-eslint/no-useless-constructor': 'error'

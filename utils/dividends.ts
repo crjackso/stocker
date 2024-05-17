@@ -1,55 +1,21 @@
-import _groupBy from 'lodash/groupBy'
-import type { StockDividendLog } from '~/types/stocks'
-import { toCurrency } from '~/utils/general'
+import type { StockDividendLog, Stock } from "~/types/stocks"
 
-export const payDates = (
-  stockDividendLogs: StockDividendLog[]
-): (Date | undefined)[] => {
-  return stockDividendLogs
-    .map((log: StockDividendLog) => {
-      return log.payDate
-    })
-    .filter(Boolean)
+export const mapDividends = (dividends: StockDividendLog[]): StockDividendLog[] => {
+  return dividends.map(dividend => mapDividend(dividend))
 }
 
-export const totalCashAmount = (
-  stockDividendLogs: StockDividendLog[]
-): string => {
-  const totalAmount = stockDividendLogs.reduce((amount, log) => {
-    amount += log.cashAmount || 0
-    return amount
-  }, 0)
+export const mapDividend = (dividend: StockDividendLog): StockDividendLog => {
+  let stock: Stock | undefined = undefined
 
-  return toCurrency(totalAmount)
-}
+  if (dividend.stock) {
+    stock = mapStock({ ...dividend.stock, tickerSymbol: dividend.tickerSymbol })
+  }
 
-export const groupedByDate = (
-  stockDividendLogs: StockDividendLog[]
-): { [payDate: string]: StockDividendLog[] } => {
-  return _groupBy(stockDividendLogs, (log: StockDividendLog) => {
-    return log.payDate
-  })
-}
-
-export const forMonth = (
-  stockDividendLogs: StockDividendLog[],
-  month: number,
-  year: number
-): StockDividendLog[] => {
-  return stockDividendLogs.filter((log: StockDividendLog) => {
-    return (
-      monthNumber(log.payDate) === month && getYear(log.payDate) === year
-    )
-  })
-}
-
-export const forDate = (
-  stockDividendLogs: StockDividendLog[],
-  date?: Date
-): StockDividendLog[] => {
-  if (!date) return []
-
-  return stockDividendLogs.filter((log: StockDividendLog) => {
-    return datesAreEqual(log.payDate, date)
-  })
+  return {
+    ...dividend,
+    exDividendDate: formatDate(dividend.exDividendDate),
+    cashAmount: Number(dividend.cashAmount),
+    payDate: formatDate(dividend.payDate),
+    stock
+  }
 }

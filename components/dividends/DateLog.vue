@@ -4,8 +4,9 @@
       v-if="inDayMode"
       icon="circle-xmark"
       role="button"
-      color="primary"
+      color="secondary"
       class="close-icon"
+      :title="closeIconTitle"
       @click="$emit('close')"
     />
 
@@ -24,7 +25,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { StockDividendLog } from '~/types/stocks';
+import type { StockDividendLog } from '~/types/stocks'
 import { formatDate, monthName } from '~/utils/date'
 
 const props = defineProps({
@@ -63,6 +64,10 @@ const inDayMode = computed(() => {
   return props.mode === 'day'
 })
 
+const closeIconTitle = computed(() => {
+  return `Close the the detail screen for ${formattedPayDate.value}`
+})
+
 const title = computed(() => {
   let date = ''
   if (inDayMode.value) {
@@ -74,7 +79,7 @@ const title = computed(() => {
 })
 
 const formattedPayDate = computed(() => {
-  return formatDate(props.payDate)
+  return formatDate(props.payDate, 'MMMM D, YYYY')
 })
 </script>
 

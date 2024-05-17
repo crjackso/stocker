@@ -4,9 +4,9 @@
 //     // return (a[f(b, i, x)] ||= []).push(b), a), {}
 //   }, {})
 // }
-  // x.reduce((a, b, i) => ((a[f(b, i, x)] ||= []).push(b), a), {})
+// x.reduce((a, b, i) => ((a[f(b, i, x)] ||= []).push(b), a), {})
 
-export const toCurrency = (value: number | undefined): string => {
+export const toCurrency = (value: number | undefined | string): string => {
   if (!value) {
     return ''
   }
@@ -16,7 +16,7 @@ export const toCurrency = (value: number | undefined): string => {
     currency: 'USD'
   })
 
-  return formatter.format(value)
+  return formatter.format(Number(value))
 }
 
 export const toPercentage = (value: number, precision = 0) => {
@@ -24,19 +24,17 @@ export const toPercentage = (value: number, precision = 0) => {
 }
 
 export const ensureError = (value: unknown): Error => {
-  console.log('yo yo', value instanceof Error)
-  return new Error('nope')
-  // if (value instanceof Error) return value
+  if (value instanceof Error) return value
 
-  // let stringified = '[Unable to stringify the thrown value]'
-  // try {
-  //   stringified = JSON.stringify(value)
-  // } catch {}
+  let stringified = '[Unable to stringify the thrown value]'
+  try {
+    stringified = JSON.stringify(value)
+  } catch { }
 
-  // const error = new Error(
-  //   `This value was thrown as is, not through an Error: ${stringified}`
-  // )
-  // return error
+  const error = new Error(
+    `This value was thrown as is, not through an Error: ${stringified}`
+  )
+  return error
 }
 
 export const classToJSON = (source: Record<string, any>) => {

@@ -1,33 +1,14 @@
-export type StockDetailsAttrs = {
+export type Stock = {
+  tickerSymbol: string
   companyName: string
-  ticker: string
-  logoUrl: string
-}
-
-export type StockDividendLogAttrs = {
-  ticker: string
-  stockDetails?: StockDetailsAttrs
-  exDividendDate?: string
-  payDate?: string
-  cashAmount?: number
-}
-
-export type PortfolioDividendsResponse = {
-  stockDividendLogs: StockDividendLogAttrs[]
-}
-
-export type CompanyProfile = {
-  tickerSymbol: string
-  name: string
-}
-
-export type StockPreviousClose = {
-  tickerSymbol: string
+  title?: string
   lastPrice: number
-  updatedAt: string
+  lastPriceAsOfDate: Date | undefined
+  updatedAt?: Date | undefined
   fiftyTwoWeekLow?: number
   fiftyTwoWeekHigh?: number
-  companyProfile?: CompanyProfile
+  logoUrl?: string
+  assetType: string
 }
 
 export type StockDetails = {
@@ -39,7 +20,7 @@ export type StockDetails = {
 export type StockDividendLog = {
   tickerSymbol: string
   cashAmount?: number
-  exDividendDate?: Date
-  payDate: Date
-  stockDetails?: StockDetails
+  exDividendDate?: string
+  payDate: string
+  stock?: Stock
 }

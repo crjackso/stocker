@@ -16,6 +16,9 @@ declare module 'vue' {
     LastDividendCard: typeof import('./components/stocks/LastDividendCard.vue')['default']
     LogList: typeof import('./components/dividends/LogList.vue')['default']
     LogSummary: typeof import('./components/dividends/LogSummary.vue')['default']
+    MoverCard: typeof import('./components/markets/MoverCard.vue')['default']
+    MoverList: typeof import('./components/markets/MoverList.vue')['default']
+    MoverLists: typeof import('./components/markets/MoverLists.vue')['default']
     NavigationDrawer: typeof import('./components/navigation/NavigationDrawer.vue')['default']
     NavigationLinks: typeof import('./components/navigation/NavigationLinks.vue')['default']
     PageHeader: typeof import('./components/global/PageHeader.vue')['default']
@@ -24,6 +27,8 @@ declare module 'vue' {
     PreviousCloseForm: typeof import('./components/stocks/PreviousCloseForm.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SearchForm: typeof import('./components/stocks/SearchForm.vue')['default']
     TopNavigation: typeof import('./components/navigation/TopNavigation.vue')['default']
+    UserList: typeof import('./components/users/UserList.vue')['default']
   }
 }

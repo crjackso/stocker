@@ -3,7 +3,7 @@
     <h3>Breakdown By Date</h3>
     <v-list>
       <v-list-item
-        v-for="(group, key) in stockDividendLogsByDate"
+        v-for="(group, key) in groupedByDate"
         :key="key"
         :title="key"
         class="pt-3"
@@ -19,18 +19,17 @@
             <v-list-item
               v-for="log in group"
               :key="log.tickerSymbol"
-              :title="log.stockDetails?.companyName"
+              :title="log.stock?.title"
               :subtitle="logCardSubtitle(log)"
             >
               <template #prepend>
                 <v-img
-                  v-if="log.stockDetails?.logoUrl"
-                  :src="log.stockDetails?.logoUrl"
+                  v-if="log.stock?.logoUrl"
+                  :src="log.stock?.logoUrl"
                   href="Company Logo"
                   width="50"
                   height="50"
                 />
-                <span v-else class="etf-label"> ETF </span>
               </template>
             </v-list-item>
           </template>
@@ -41,8 +40,8 @@
 </template>
 
 <script lang="ts" setup>
+import useDividendsCalendar from '~/composables/dividends/useDividendsCalendar'
 import type { StockDividendLog } from '~/types/stocks'
-import { groupedByDate } from '~/utils/dividends'
 import { formatDate } from '~/utils/date'
 
 const props = defineProps({
@@ -52,13 +51,8 @@ const props = defineProps({
   }
 })
 
-const stockDividendLogsByDate = computed(() => {
-  return groupedByDate(props.stockDividendLogs)
-})
-
-// const sortedStockDividendLogs = computed(() => {
-//   return props.stockDividendLogs.sorted()
-// })
+const {stockDividendLogs } = toRefs(props)
+const { groupedByDate } = useDividendsCalendar(stockDividendLogs)
 
 const logCardSubtitle = (stockDividendLog: StockDividendLog) => {
   return `Pay Date: ${formatDate(stockDividendLog.payDate)}`
