@@ -10,7 +10,7 @@
         elevation="2"
       >
         <template #title>
-          <v-icon icon="fa-calendar-days" color="secondary"></v-icon>
+          <v-icon icon="fa-calendar-days" color="secondary" />
           <span class="pay-date-title px-2">{{ key }}</span>
         </template>
 
@@ -18,8 +18,8 @@
           <template #activator>
             <v-list-item
               v-for="log in group"
-              :key="log.ticker"
-              :title="log.name()"
+              :key="log.tickerSymbol"
+              :title="log.stockDetails?.companyName"
               :subtitle="logCardSubtitle(log)"
             >
               <template #prepend>
@@ -41,26 +41,26 @@
 </template>
 
 <script lang="ts" setup>
-import StockDividendLog from '~/models/StockDividendLog'
+import type { StockDividendLog } from '~/types/stocks'
+import { groupedByDate } from '~/utils/dividends'
+import { formatDate } from '~/utils/date'
 
 const props = defineProps({
   stockDividendLogs: {
-    type: StockDividendLogs,
+    type: Array<StockDividendLog>,
     required: true
   }
 })
 
-// Computed
 const stockDividendLogsByDate = computed(() => {
-  return sortedStockDividendLogs.value?.groupedByDate()
+  return groupedByDate(props.stockDividendLogs)
 })
 
-const sortedStockDividendLogs = computed(() => {
-  return props.stockDividendLogs.sorted()
-})
+// const sortedStockDividendLogs = computed(() => {
+//   return props.stockDividendLogs.sorted()
+// })
 
-// Methods
 const logCardSubtitle = (stockDividendLog: StockDividendLog) => {
-  return `Pay Date: ${stockDividendLog.payDateFormatted}`
+  return `Pay Date: ${formatDate(stockDividendLog.payDate)}`
 }
 </script>

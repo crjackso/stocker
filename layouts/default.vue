@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <nuxt-loading-indicator />
     <slot />
   </v-app>
 </template>

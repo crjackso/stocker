@@ -1,6 +1,12 @@
 {
-  "volar.inlayHints.eventArgumentInInlineHandlers": false,
   "[vue]": {
     "editor.formatOnSave": true,
-  }
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always"
+  },
+  "eslint.codeActionsOnSave.rules": null,
+  "eslint.format.enable": true,
+  "eslint.experimental.useFlatConfig": true,
+  "eslint.run": "onSave",
 }

@@ -18,7 +18,7 @@
         <span class="muted">{{ toCurrency(high) }}</span>
       </template>
 
-      <template #:thumb-label="{ modelValue }">
+      <template #thumb-label="{ modelValue }">
         {{ toCurrency(modelValue) }}
       </template>
     </v-slider>
@@ -29,6 +29,7 @@
 
 <script setup lang="ts">
 import { toCurrency } from '~/utils/general'
+import useStocks from '~/composables/stocks/useStocks'
 
 const { percentageOff52WeekLow, percentageOff52WeekHigh } = useStocks()
 

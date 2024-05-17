@@ -1,18 +1,25 @@
-class BaseApi {
-  async post<T>(url: string, data?: object, extras = {}): Promise<T> {
-    const $res: T = await $fetch(url, {
-      method: 'POST',
-      body: data,
-      ...extras
-    })
-    return $res
-  }
+import { type DocumentNode } from 'graphql'
+import type { GraphQLClient } from 'graphql-request'
+import type { ConsolaInstance } from 'consola'
 
-  async get<T>(url: string, query = {}) {
-    return (await $fetch(url, {
-      method: 'GET',
-      query
-    })) as T
+class BaseApi {
+  constructor(
+    private readonly $graphql: GraphQLClient,
+    private logger: ConsolaInstance
+  ) {}
+
+  async query<T>(
+    queryBody: DocumentNode,
+    variables: Record<string, unknown>
+  ): Promise<T> {
+    const field = parseQueryName(queryBody)
+
+    this.logger.info(
+      `Making GraphQL request ${field} ${JSON.stringify(variables)}`
+    )
+
+    const response = await this.$graphql.request<T>(queryBody, variables)
+    return response[field as keyof T] as T
   }
 }
 

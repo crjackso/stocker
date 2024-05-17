@@ -7,7 +7,7 @@
             class="dividend-calendar"
             title-position="left"
             :attributes="calendarAttributes"
-            @dayclick="onDayClick"
+            @dayclick="onDayChange"
             @did-move="onMonthChange"
           />
         </v-col>
@@ -25,27 +25,29 @@
 </template>
 
 <script setup lang="ts">
+import gql from 'graphql-tag'
+import type { StockDividendLog } from '~/types/stocks'
 import { currentDate } from '~/utils/date'
-import StockDividendLogs from '~/models/StockDividendLogs'
+import { payDates, forMonth, forDate } from '~/utils/dividends'
 
-// Props
+const { $api } = useNuxtApp()
+
 const props = defineProps({
-  stockDividendLogs: {
-    type: StockDividendLogs,
+  tickerSymbols: {
+    type: String,
     required: true
   }
 })
 
-// Data
+// const stockDividendLogs: Ref<StockDividendLog[]> = ref([])
 const visibleCalendarDate = ref(currentDate().toDate())
-const activeCalendarDate = ref(undefined)
+const activeCalendarDate: Ref<Date | undefined> = ref(undefined)
 const LogDetailModes = {
   month: 'month',
   day: 'day'
 }
 const logDetailMode = ref(LogDetailModes.month)
 
-// Computed
 const calendarAttributes = computed(() => {
   const attributes = [
     {
@@ -65,13 +67,13 @@ const calendarAttributes = computed(() => {
 })
 
 const activeDayDividendLogs = computed(() => {
-  return props.stockDividendLogs.forDate(
-    activeCalendarDate.value
-  ) as StockDividendLogs
+  if (!stockDividendLogs.value?.length) return []
+  return forDate(stockDividendLogs.value, activeCalendarDate.value)
 })
 
 const activeMonthDividendLogs = computed(() => {
-  return props.stockDividendLogs.forMonth(activeMonth.value, activeYear.value)
+  if (!stockDividendLogs.value?.length) return []
+  return forMonth(stockDividendLogs.value, activeMonth.value, activeYear.value)
 })
 
 const activeDividendLogs = computed(() => {
@@ -85,7 +87,7 @@ const activeModeDate = computed(() => {
 })
 
 const activeMonthPayDates = computed(() => {
-  return activeMonthDividendLogs.value.payDates()
+  return payDates(activeMonthDividendLogs.value)
 })
 
 const activeMonth = computed(() => {
@@ -97,12 +99,12 @@ const activeYear = computed(() => {
 })
 
 // Methods
-const onDayClick = (calendarDay: any) => {
+const onDayChange = (calendarDay: { date: Date }) => {
   logDetailMode.value = LogDetailModes.day
   activeCalendarDate.value = calendarDay.date
 }
 
-const onMonthChange = (page: any) => {
+const onMonthChange = (page: Array<{ month: number; year: number }>) => {
   const selectedPage = page[0]
   const selectedMonth = selectedPage.month - 1
   visibleCalendarDate.value = new Date(selectedPage.year, selectedMonth, 1)
@@ -114,6 +116,40 @@ const onDividendDayLogClose = () => {
   logDetailMode.value = LogDetailModes.month
   activeCalendarDate.value = undefined
 }
+
+const formattedTickers = computed(() => {
+  return props.tickerSymbols.split(',').map((item) => item.trim())
+})
+
+const variables = computed(() => {
+  return {
+    input: {
+      tickerSymbol: {
+        in: formattedTickers.value
+      }
+    }
+  }
+})
+
+const query = gql`
+  query getDividends($input: DividendWhereInput!) {
+    getDividends(input: $input) {
+      id
+      tickerSymbol
+      payDate
+      cashAmount
+      exDividendDate
+    }
+  }
+`
+
+const fetchDividendLogs = async (): Promise<StockDividendLog[]> => {
+  return await $api.query<StockDividendLog[]>(query, variables.value)
+}
+
+const { data: stockDividendLogs } = await useAsyncData<StockDividendLog[]>(
+  fetchDividendLogs
+)
 </script>
 
 <style scoped lang="scss">

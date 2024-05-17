@@ -3,28 +3,28 @@
     class="mx-auto"
     max-width="368"
     :loading="loading && 'secondary'"
-    :title="previousClose.ticker"
+    :title="previousClose.tickerSymbol"
     :subtitle="companyName"
     :disabled="loading"
   >
-    <v-divider color="var(--secondary)" thickness="4"></v-divider>
+    <v-divider color="var(--secondary)" thickness="4"/>
 
     <v-card-text>
       <div>
         <strong class="pr-3">Current Price:</strong>
-        <span>{{ previousClose.priceFormatted }}</span>
+        <span>{{ lastClosePrice }}</span>
       </div>
 
       <stocks-fifty-two-week-display
-        :price="previousClose.price"
-        :low="previousClose.fiftyWeekLow"
-        :high="previousClose.fiftyWeekHigh"
+        :price="previousClose.lastPrice"
+        :low="previousClose.fiftyTwoWeekLow"
+        :high="previousClose.fiftyTwoWeekHigh"
         class="my-2"
       />
       <data-points :data-points="summaryPoints" />
     </v-card-text>
 
-    <v-divider></v-divider>
+    <v-divider/>
 
     <v-card-actions>
       <v-btn>View Details </v-btn>
@@ -34,8 +34,9 @@
 
 <script setup lang="ts">
 import type { PropType } from 'vue'
-import StockPreviousClose from '~/models/StockPreviousClose'
 import type { DataPoint } from '~/types'
+import type { StockPreviousClose } from '~/types/stocks';
+import useStockPreviousClose from '~/composables/stocks/useStockPreviousClose'
 
 const props = defineProps({
   previousClose: {
@@ -49,12 +50,23 @@ const props = defineProps({
 })
 
 const summaryPoints = computed((): Array<DataPoint> => {
-  return [{ label: 'As Of', text: props.previousClose.asOfDate }]
+  return [{ label: 'As Of', text: asOfDate.value }]
 })
 
-const companyName = computed(() => {
-  return props.previousClose.companyProfile?.name
-})
+const { previousClose } = toRefs(props)
+const { asOfDate, companyName, lastClosePrice } = useStockPreviousClose(previousClose)
+
+// const companyName = computed(() => {
+//   return props.previousClose.companyProfile?.name
+// })
+
+// const lastClosePrice = computed(() => {
+//   return toCurrency(props.previousClose.lastPrice)
+// })
+
+// const asOfDate = computed(() => {
+//   return formatDate(props.previousClose.updatedAt)
+// })
 </script>
 
 <style lang="scss" scoped>

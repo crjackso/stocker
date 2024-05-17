@@ -1,4 +1,4 @@
-import { useStocks } from '~/composables/stocks'
+import { useStocks } from '~/composables/stocks/useStocks'
 
 describe('useStocks', () => {
   describe('#percentageOff52WeekLow', () => {

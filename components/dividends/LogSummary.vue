@@ -6,19 +6,21 @@
 </template>
 
 <script lang="ts" setup>
+import type { StockDividendLog } from '~/types/stocks'
+import { totalCashAmount } from '~/utils/dividends'
+
 const props = defineProps({
   stockDividendLogs: {
-    type: StockDividendLogs,
+    type: Array<StockDividendLog>,
     required: true
   }
 })
 
-// Computed
 const summaryPoints = computed(() => {
   return [
     {
       label: 'Total Payment Amount',
-      text: props.stockDividendLogs.totalCashAmount()
+      text: totalCashAmount(props.stockDividendLogs)
     }
   ]
 })

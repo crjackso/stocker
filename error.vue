@@ -5,7 +5,7 @@
         src="~/assets/images/logo-no-background.png"
         alt="Stocker Logo"
         class="main-logo"
-      />
+      >
     </NuxtLink>
     <v-divider
       class="border-opacity-100"
@@ -26,7 +26,10 @@
 
 <script setup lang="ts">
 const props = defineProps({
-  error: Object
+  error: {
+    type: Object,
+    default: () => {}
+  }
 })
 
 const statusCode = ref<number | undefined>(undefined)

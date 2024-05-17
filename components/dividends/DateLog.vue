@@ -24,11 +24,12 @@
 </template>
 
 <script lang="ts" setup>
+import type { StockDividendLog } from '~/types/stocks';
 import { formatDate, monthName } from '~/utils/date'
 
 const props = defineProps({
   stockDividendLogs: {
-    type: StockDividendLogs,
+    type: Array<StockDividendLog>,
     required: true
   },
   payDate: {
@@ -46,9 +47,8 @@ const props = defineProps({
 
 defineEmits(['close'])
 
-// Computed
 const noDividends = computed(() => {
-  return !props.stockDividendLogs?.count()
+  return !props.stockDividendLogs?.length
 })
 
 const month = computed(() => {
@@ -87,10 +87,6 @@ h2 {
   display: inline;
   margin-left: -31px;
   margin-right: 7px;
-}
-
-.etf-label {
-  width: 50px;
 }
 
 :deep(.pay-date-title) {

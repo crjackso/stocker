@@ -2,23 +2,26 @@ import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  devtools: { enabled: true },
   css: [
     'vuetify/lib/styles/main.sass',
     '@/assets/styles/main.scss',
     '@fortawesome/fontawesome-svg-core/styles.css'
   ],
   modules: [
+    '@nuxt/eslint',
     '@nuxtjs/device',
+    'nuxt-graphql-request',
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
-        // @ts-expect-error
-        config.plugins.push(vuetify({ autoImport: true }))
+        config?.plugins?.push(vuetify({ autoImport: true }))
       })
     }
   ],
   build: {
     transpile: [
       'vuetify',
+      'nuxt-graphql-request',
       '@fortawesome/fontawesome-svg-core',
       '@fortawesome/free-solid-svg-icons',
       '@fortawesome/free-regular-svg-icons',
@@ -26,7 +29,16 @@ export default defineNuxtConfig({
     ]
   },
   runtimeConfig: {
-    stockerApiUrl: 'http://api:3011'
+    stockerApiUrl: 'http://api:3011',
+    public: {
+      graphql: {
+        clients: {
+          default: {
+            endpoint: 'http://stocker.localhost/api/graphql'
+          }
+        }
+      }
+    }
   },
   vite: {
     define: {
@@ -51,5 +63,14 @@ export default defineNuxtConfig({
   ],
   imports: {
     dirs: ['models', 'lib']
+  },
+  alias: {
+    // https://github.com/Gomah/nuxt-graphql-request/issues/56
+    'cross-fetch': 'cross-fetch/dist/browser-ponyfill.js'
+  },
+  eslint: {
+    config: {
+      stylistic: true
+    }
   }
 })

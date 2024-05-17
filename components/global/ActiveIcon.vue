@@ -1,5 +1,5 @@
 <template>
-  <v-icon :active="active" :icon="iconClass"> </v-icon>
+  <v-icon :active="active" :icon="iconClass" />
 </template>
 
 <script>
