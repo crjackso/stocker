@@ -2,9 +2,9 @@
   <v-sheet width="400" class="mx-auto">
     <v-form v-model="valid" @submit.prevent="submit">
       <v-text-field
-        v-model="tickers"
         :rules="rules"
         label="Enter ticker symbols (comma-delimited)"
+        @update:model-value="updateModelValue"
       />
       <v-btn
         type="submit"
@@ -20,20 +20,29 @@
 </template>
 
 <script setup lang="ts">
-import type { SubmitEventPromise } from 'vuetify/lib/framework.mjs'
+import type { ValidationRule } from '~/types';
 
 const valid = ref(false)
 const tickers = ref('')
 
-const emit = defineEmits(['submit'])
+const emits = defineEmits(['submit', 'update:modelValue'])
 
 const props = defineProps({
-  loading: {
+  pending: {
     type: Boolean
+  },
+  modelValue: {
+    type: String,
+    required: false,
+    default: ''
   }
 })
 
-const validateTickerSymbols = (value: string | undefined): Boolean | string => {
+// watch(tickers, (updatedTickers) => {
+//   emit('update:modelValue', updatedTickers)
+// })
+
+const validateTickerSymbols = (value: string | undefined): boolean | string => {
   if (!value) return 'At least one ticker symbol is required'
 
   const allTickersValid = value.split(',').every(Boolean)
@@ -43,16 +52,17 @@ const validateTickerSymbols = (value: string | undefined): Boolean | string => {
   return true
 }
 
-const rules: any[] = [(value: any) => validateTickerSymbols(value)]
+const rules: (ValidationRule)[] = [(value) => validateTickerSymbols(value)]
 
 const disableSubmit = computed(() => {
-  return !valid.value || props.loading
+  return !valid.value || props.pending
 })
 
-const submit = async (event: SubmitEventPromise) => {
-  const results = await event
-  if (results.valid) {
-    emit('submit', tickers.value)
-  }
+const updateModelValue = (value: string) => {
+  tickers.value = value
+}
+
+const submit = () => {
+  emits('submit', tickers.value)
 }
 </script>

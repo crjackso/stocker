@@ -1,4 +1,5 @@
 <template>
+  <NuxtLoadingIndicator class="loading-indicator" />
   <NuxtLayout :name="layout">
     <NuxtPage />
   </NuxtLayout>
@@ -17,3 +18,9 @@ useHead({
   }
 })
 </script>
+
+<style lang="scss">
+.loading-indicator {
+  background-color: var(--secondary);
+}
+</style>

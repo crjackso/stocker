@@ -16,8 +16,6 @@
 </template>
 
 <script setup>
-// import useDevice from '@nuxtjs/device'
-
 const { isMobile } = useDevice()
 
 defineProps({

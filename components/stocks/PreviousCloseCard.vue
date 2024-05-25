@@ -2,29 +2,33 @@
   <v-card
     class="mx-auto"
     max-width="368"
-    :loading="loading && 'secondary'"
-    :title="previousClose.ticker"
-    :subtitle="companyName"
-    :disabled="loading"
+    :loading="pending"
+    :disabled="pending"
   >
-    <v-divider color="var(--secondary)" thickness="4"></v-divider>
+    <div v-if="stock.logoUrl">
+      <v-img height="100" :src="stock.logoUrl" />
+      <v-divider color="var(--secondary)" thickness="4"/>
+    </div>
+
+    <v-card-item>
+      <v-card-title>{{ stock.tickerSymbol }}</v-card-title>
+      <v-card-subtitle>
+        <span class="me-1">{{ stock.companyName }}</span>
+      </v-card-subtitle>
+    </v-card-item>
 
     <v-card-text>
       <div>
         <strong class="pr-3">Current Price:</strong>
-        <span>{{ previousClose.priceFormatted }}</span>
+        <span>{{ previousClosePriceFormatted }}</span>
       </div>
 
-      <stocks-fifty-two-week-display
-        :price="previousClose.price"
-        :low="previousClose.fiftyWeekLow"
-        :high="previousClose.fiftyWeekHigh"
-        class="my-2"
-      />
+      <stocks-fifty-two-week-display :stock="stock" class="my-2" />
+
       <data-points :data-points="summaryPoints" />
     </v-card-text>
 
-    <v-divider></v-divider>
+    <v-divider/>
 
     <v-card-actions>
       <v-btn>View Details </v-btn>
@@ -34,26 +38,32 @@
 
 <script setup lang="ts">
 import type { PropType } from 'vue'
-import StockPreviousClose from '~/models/StockPreviousClose'
+import useStock from '~/composables/stocks/useStock';
 import type { DataPoint } from '~/types'
+import type { Stock } from '~/types/stocks';
 
 const props = defineProps({
-  previousClose: {
-    type: Object as PropType<StockPreviousClose>,
+  stock: {
+    type: Object as PropType<Stock>,
     required: true
   },
-  loading: {
+  pending: {
     type: Boolean,
     default: false
   }
 })
 
-const summaryPoints = computed((): Array<DataPoint> => {
-  return [{ label: 'As Of', text: props.previousClose.asOfDate }]
-})
+const {
+  assetType,
+  previousClosePriceFormatted,
+  previousCloseAsOfDateFormatted
+} = useStock(toRef(props.stock))
 
-const companyName = computed(() => {
-  return props.previousClose.companyProfile?.name
+const summaryPoints = computed((): Array<DataPoint> => {
+  return [
+    { label: 'As Of', text: previousCloseAsOfDateFormatted.value },
+    { label: 'Asset Type', text: assetType.value },
+  ]
 })
 </script>
 

@@ -1,6 +1,29 @@
 {
-  "volar.inlayHints.eventArgumentInInlineHandlers": false,
   "[vue]": {
     "editor.formatOnSave": true,
-  }
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit"
+  },
+  "eslint.codeActionsOnSave.rules": null,
+  "eslint.format.enable": true,
+  "eslint.experimental.useFlatConfig": true,
+  "eslint.run": "onSave",
+  "editor.formatOnSave": true,
+  "typescript.format.enable": true,
+  "typescript.format.semicolons": "remove",
+
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "files.autoSave": "onFocusChange",
+  "files.exclude": {
+    "**/.DS_Store": true,
+    "**/.git": true,
+    "**/.hg": true,
+    "**/.svn": true,
+    "**/CVS": true,
+    "**/__MACOSX": true
+  },
+  "prettier.trailingComma": "none"
 }

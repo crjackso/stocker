@@ -9,11 +9,7 @@
       <v-icon :icon="drawerNavToggleIcon" />
     </v-btn>
     <NuxtLink to="/" class="d-flex ml-2">
-      <img
-        src="~/assets/images/logo-no-background.png"
-        alt="Stocker Logo"
-        class="main-logo"
-      />
+      <img src="~/assets/images/logo-no-background.png" alt="Stocker Logo" class="main-logo">
     </NuxtLink>
   </v-app-bar>
 </template>

@@ -1,9 +1,8 @@
 <template>
   <div data-test-nav-links>
-    <template v-for="link in links">
+    <template v-for="link in links" :key="link.name">
       <v-list-group
         v-if="link.isParent && !link.childless"
-        :key="link.name"
         :class="
           hasActiveSubnav(link.name)
             ? 'active-parent-nav'
@@ -38,7 +37,6 @@
 
       <v-list-item
         v-else-if="!link.isParent"
-        :key="link.name"
         :to="link.to"
         :data-test-nav-item="link.name"
         :prepend-icon="link.icon"

@@ -5,20 +5,20 @@
       readonly
       show-ticks
       hide-details
-      :model-value="price"
-      :max="high"
-      :min="low"
+      :model-value="previousClosePrice"
+      :max="fiftyTwoWeekHigh"
+      :min="fiftyTwoWeekLow"
       color="var(--secondary)"
     >
       <template #prepend>
-        <span class="muted">{{ toCurrency(low) }}</span>
+        <span class="muted">{{ fiftyTwoWeekLowFormatted }}</span>
       </template>
 
       <template #append>
-        <span class="muted">{{ toCurrency(high) }}</span>
+        <span class="muted">{{ fiftyTwoWeekHighFormatted }}</span>
       </template>
 
-      <template #:thumb-label="{ modelValue }">
+      <template #thumb-label="{ modelValue }">
         {{ toCurrency(modelValue) }}
       </template>
     </v-slider>
@@ -28,29 +28,40 @@
 </template>
 
 <script setup lang="ts">
+import type { Stock } from '~/types/stocks'
+import useStock from '~/composables/stocks/useStock'
 import { toCurrency } from '~/utils/general'
 
-const { percentageOff52WeekLow, percentageOff52WeekHigh } = useStocks()
+const props = defineProps({
+  stock: {
+    type: Object as PropType<Stock>,
+      required: true
+    }
+  })
 
-const props = defineProps<{
-  price: number | string
-  low?: number
-  high?: number
-}>()
+const {
+  fiftyTwoWeekHigh,
+  fiftyTwoWeekLow,
+  fiftyTwoWeekLowFormatted,
+  fiftyTwoWeekHighFormatted,
+  percentageOff52WeekLow,
+  percentageOff52WeekHigh,
+  previousClosePrice
+} = useStock(toRef(props.stock))
 
 const hasAllInformation = computed(() => {
-  return props.low && props.high
+  return fiftyTwoWeekHigh.value && fiftyTwoWeekLow.value
 })
 
 const relativePricePoints = computed(() => {
   return [
     {
       label: '% from 52 Week Low',
-      text: percentageOff52WeekLow(props.price, props.low)
+      text: percentageOff52WeekLow.value
     },
     {
       label: '% from 52 Week High',
-      text: percentageOff52WeekHigh(props.price, props.high)
+      text: percentageOff52WeekHigh.value
     }
   ]
 })

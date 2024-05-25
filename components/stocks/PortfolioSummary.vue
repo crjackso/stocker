@@ -1,72 +1,34 @@
 <template>
-  <div>
+  <section>
     <v-container>
       <v-row>
         <v-col
-          v-for="quote in previousCloseQuotes"
-          :key="quote.ticker"
+          v-for="stock in stocks"
+          :key="stock.tickerSymbol"
           :sm="columnCount"
           cols="12"
         >
-          <stocks-previous-close-card
-            :loading="loading"
-            :previous-close="quote"
-            class="my-3"
-          />
+          <stocks-previous-close-card :stock="stock" :pending="pending" class="my-3" />
         </v-col>
       </v-row>
     </v-container>
-
-    <div v-if="noResultsFound" class="text-center">
-      <v-icon icon="fa-circle-exclamation" color="primary"></v-icon>
-      No results found
-    </div>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">
-import StockPreviousClose from '~/models/StockPreviousClose'
-
-const { $api } = useNuxtApp()
-const previousCloseQuotes = ref<StockPreviousClose[]>([])
-const loading = ref(false)
+import type { Stock } from '~/types/stocks'
 
 const props = defineProps({
-  tickers: {
-    type: String,
+  stocks: {
+    type: Array<Stock>,
     required: true
-  }
+  },
+  pending: { type: Boolean }
 })
 
 const columnCount = computed(() =>
-  previousCloseQuotes.value.length === 1 ? 12 : 6
+  props.stocks.length === 1 ? 12 : 6
 )
-
-const hasEnteredTickers = computed(() => {
-  return !!props.tickers.length
-})
-
-const noResultsFound = computed(() => {
-  return (
-    hasEnteredTickers.value &&
-    previousCloseQuotes.value.length === 0 &&
-    !loading.value
-  )
-})
-
-const fetchTickerData = async () => {
-  try {
-    loading.value = true
-    if (props.tickers) {
-      previousCloseQuotes.value = await $api.stocks.previousClose(props.tickers)
-    }
-  } finally {
-    loading.value = false
-  }
-}
-
-await fetchTickerData()
-watch(() => props.tickers, fetchTickerData)
 </script>
 
 <style lang="scss" scoped></style>

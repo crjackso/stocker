@@ -3,14 +3,14 @@
     <h3>Breakdown By Date</h3>
     <v-list>
       <v-list-item
-        v-for="(group, key) in stockDividendLogsByDate"
+        v-for="(group, key) in groupedByDate"
         :key="key"
         :title="key"
         class="pt-3"
         elevation="2"
       >
         <template #title>
-          <v-icon icon="fa-calendar-days" color="secondary"></v-icon>
+          <v-icon icon="fa-calendar-days" color="secondary" />
           <span class="pay-date-title px-2">{{ key }}</span>
         </template>
 
@@ -18,19 +18,18 @@
           <template #activator>
             <v-list-item
               v-for="log in group"
-              :key="log.ticker"
-              :title="log.name()"
+              :key="log.tickerSymbol"
+              :title="log.stock?.title"
               :subtitle="logCardSubtitle(log)"
             >
               <template #prepend>
                 <v-img
-                  v-if="log.stockDetails?.logoUrl"
-                  :src="log.stockDetails?.logoUrl"
+                  v-if="log.stock?.logoUrl"
+                  :src="log.stock?.logoUrl"
                   href="Company Logo"
                   width="50"
                   height="50"
                 />
-                <span v-else class="etf-label"> ETF </span>
               </template>
             </v-list-item>
           </template>
@@ -41,26 +40,21 @@
 </template>
 
 <script lang="ts" setup>
-import StockDividendLog from '~/models/StockDividendLog'
+import useDividendsCalendar from '~/composables/dividends/useDividendsCalendar'
+import type { StockDividendLog } from '~/types/stocks'
+import { formatDate } from '~/utils/date'
 
 const props = defineProps({
   stockDividendLogs: {
-    type: StockDividendLogs,
+    type: Array<StockDividendLog>,
     required: true
   }
 })
 
-// Computed
-const stockDividendLogsByDate = computed(() => {
-  return sortedStockDividendLogs.value?.groupedByDate()
-})
+const {stockDividendLogs } = toRefs(props)
+const { groupedByDate } = useDividendsCalendar(stockDividendLogs)
 
-const sortedStockDividendLogs = computed(() => {
-  return props.stockDividendLogs.sorted()
-})
-
-// Methods
 const logCardSubtitle = (stockDividendLog: StockDividendLog) => {
-  return `Pay Date: ${stockDividendLog.payDateFormatted}`
+  return `Pay Date: ${formatDate(stockDividendLog.payDate)}`
 }
 </script>
