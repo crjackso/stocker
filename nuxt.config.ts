@@ -63,7 +63,7 @@ export default defineNuxtConfig({
     { path: '~/components/global/', pathPrefix: false, extensions: ['vue'] }
   ],
   imports: {
-    dirs: ['models', 'lib']
+    dirs: ['models', 'lib', 'utils/transformers']
   },
   alias: {
     // https://github.com/Gomah/nuxt-graphql-request/issues/56

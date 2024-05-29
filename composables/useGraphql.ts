@@ -1,12 +1,17 @@
-import type { GraphQLClient } from 'graphql-request'
+import type { AsyncDataOptions } from 'nuxt/app'
 import type { TypedDocumentNode } from '@graphql-typed-document-node/core'
+import type { GraphQLClient } from 'graphql-request'
 import type { GraphQLPlugin } from '~/types'
 
-export function useGraphql<T>(
+type KeysOf<T> = Array<T extends T ? keyof T extends string ? keyof T : never : never>
+
+export interface GraphqlQueryOptions<T, TDefaultType = T> extends AsyncDataOptions<T, T, KeysOf<T>, TDefaultType> { }
+
+export async function useGraphql<T>(
   key: string,
   query: TypedDocumentNode,
   variables: MaybeRef<Record<string, unknown>>,
-  asyncDataOptions: { default: () => T | Ref<T> }
+  asyncDataOptions: GraphqlQueryOptions<T>
 ) {
   const variableRef = toRef(variables)
   const { $graphql, $log } = useNuxtApp()
@@ -19,5 +24,5 @@ export function useGraphql<T>(
     return response[field as keyof T] as T
   }
 
-  return useAsyncData(key, fetch, asyncDataOptions)
+  return await useAsyncData(key, fetch, asyncDataOptions)
 }

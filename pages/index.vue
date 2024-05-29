@@ -1,8 +1,16 @@
 <template>
   <section>
     <h1>Dashboard</h1>
-
-    <markets-mover-lists />
+    <v-container>
+      <v-row>
+        <v-col cols="12" sm="8">
+          <portfolios-portfolio-summary />
+        </v-col>
+        <v-col cols="12" sm="4">
+          <markets-mover-lists />
+        </v-col>
+      </v-row>
+    </v-container>
   </section>
 </template>
 

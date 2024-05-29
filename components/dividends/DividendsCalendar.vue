@@ -40,7 +40,7 @@ const props = defineProps({
   }
 })
 
-const { stockDividendLogs, pending, error } = useDividendFetch(props.tickerSymbols)
+const { stockDividendLogs, pending, error } = await useDividendFetch(props.tickerSymbols)
 const visibleCalendarDate: Ref<Date> = ref(currentDate().toDate())
 const activeCalendarDate: Ref<Date | undefined> = ref(undefined)
 const LogDetailModes = {

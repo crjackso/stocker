@@ -24,3 +24,11 @@ export type StockDividendLog = {
   payDate: string
   stock?: Stock
 }
+
+export type Portfolio = {
+  title: string
+  userId: number
+  user?: typeof User
+  createdAt?: Date
+  stocks?: Stock[]
+}

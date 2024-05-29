@@ -11,7 +11,7 @@
 
     <div v-show="pending">Loading...</div>
 
-    <stocks-portfolio-summary :stocks="stocks" />
+    <stocks-stock-list :stocks="stocks" />
 
     <div v-if="noResultsFound" class="text-center">
       <v-icon icon="fa-circle-exclamation" color="primary" />
@@ -23,6 +23,7 @@
 <script setup lang="ts">
 import gql from 'graphql-tag'
 import useTickers from '~/composables/stocks/useTickers'
+import type { Stock } from '~/types/stocks'
 
 const tickers = ref('')
 
@@ -30,7 +31,7 @@ const noResultsFound = computed(() => {
   return !pending.value && tickers.value?.length && !stocks.value?.length
 })
 
-const { formattedTickers } = useTickers(tickers)
+const formattedTickers = useTickers(tickers)
 
 const query = gql`
   query stocks($input: StockWhereInput!) {
@@ -59,7 +60,7 @@ const variables = computed(() => {
   }
 })
 
-const fetchOptions = {
+const fetchOptions: GraphqlQueryOptions<Stock[]> = {
   default: () => [],
   transform: mapStocks,
   immediate: false
@@ -74,7 +75,7 @@ const {
   status,
   error,
   refresh
-} = await useGraphql(`stocks:${tickers.value}`, query, variables, fetchOptions)
+} = await useGraphql<Stock[]>(`stocks:${tickers.value}`, query, variables, fetchOptions)
 
 const onTickerUpdate = async (updatedTickers: string) => {
   tickers.value = updatedTickers
